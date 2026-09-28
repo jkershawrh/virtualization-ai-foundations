@@ -14,21 +14,21 @@ factory_receipt:
     may_publish: false
   presentation_source:
     repository: https://github.com/jkershawrh/virtualization-ai-foundations
-    revision: "68e3980d0a1df4ff20d36e6e76f8518781345239"
+    revision: "7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da"
     tree_dirty: false
   artifacts:
     workload:
-      image: localhost/virtualization-ai-adapter@sha256:b55c096b006610e0c910ef133cbf0992bf24140ab872f233588a8420855e18ec
+      image: ghcr.io/jkershawrh/virtualization-ai-foundations-adapter@sha256:429d27ecd1eaaec98be8e8d252925fe8dd6b0f525d0c5f06f65d1a6adba6d9a9
       architecture: linux/amd64
       source_repository: https://github.com/jkershawrh/virtualization-ai-foundations
-      source_revision: "68e3980d0a1df4ff20d36e6e76f8518781345239"
-      release_receipt: {path: evidence/workload-artifact-release.json, sha256: "ba13bd2b2abd0c5bc0342ddc8ac9fe131485beeb06aa6c59f9f851488a71bde3"}
+      source_revision: "7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da"
+      release_receipt: {path: evidence/published-adapter-release.json, sha256: "c1fc3300d68c3e7394b0ab5c80ca9d0094fd782c32d1ee0e8f3925380843560b"}
     presentation:
-      image: localhost/virtualization-ai-presentation@sha256:85bd11634e59e565ab882d21fc70274fa133712ca5afbc5ea2c29e20f82b2df5
+      image: ghcr.io/jkershawrh/virtualization-ai-foundations-presentation@sha256:fb4869e465beb513636ad574d9ee1974d82431b226099e6d8933f24263b9d61c
       architecture: linux/amd64
       source_repository: https://github.com/jkershawrh/virtualization-ai-foundations
-      source_revision: "68e3980d0a1df4ff20d36e6e76f8518781345239"
-      release_receipt: {path: evidence/presentation-artifact-release.json, sha256: "f97f254218a464ab266f6ef96d6b4f786e1aff7a9e58d8e715df6819d85a9952"}
+      source_revision: "7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da"
+      release_receipt: {path: evidence/published-presentation-release.json, sha256: "8ef9a3e6edbff9506efc0f836de3dd63d4895ff6d4e25e3f060dfd7547ba3bfb"}
     showroom_content:
       repository: https://github.com/jkershawrh/virtualization-ai-foundations
       revision: "68e3980d0a1df4ff20d36e6e76f8518781345239"
@@ -37,6 +37,7 @@ factory_receipt:
     development_journey: {path: evidence/factory-development-journey.json, sha256: "cd2840f3d0ee5f4d3b97dafeccf51bd8c733df76ec4e532fbc26bd4bcec473a0"}
     presentation_verification: {path: evidence/presentation-verification.json, sha256: "437c5662121a5d059843143f676cafa22d5aad053af4e1fe067a660fe2c8d880"}
     zero_residue: {path: evidence/factory-zero-residue.json, sha256: "49931c01dad28739c3b8e6901d61f5646b720614ffa57a428de7c5ec7a9457f5"}
+    published_release: {path: evidence/published-release.json, sha256: "f5e16abb0a6ed3c621c030c11620f4c8f3cfa52156e1b00ffc36aa7167e0e575"}
   contracts:
     demo_blueprint: demo-blueprint.yaml
     story_brief: story.brief.yaml
@@ -44,7 +45,7 @@ factory_receipt:
     claim_registry: tests/claim_registry.yaml
     benchmark_rubric: tests/benchmark_rubric.yaml
   known_blockers:
-    - Images exist as local digest-pinned OCI candidates but are not mirrored to an approved registry, signed, or verified by exact-digest pull.
+    - Published GHCR candidates are digest-pinned, signed, attested, and exact-pull verified, but Launchpad must still approve the registry destination, evidence retention, and rollback policy.
     - No approved OpenShift cluster and managed Intel Xeon CPU model endpoint were available for the live VM-origin journey.
     - Declared chart resources have not been measured at one, five, or twenty-five seats.
     - OpenShift reclaim and zero-residue evidence remain independent Launchpad gates; the factory receipt covers only the local container smoke environment.
@@ -72,7 +73,7 @@ proposed_launchpad_intake:
     solution_family: virtualization_ai
   sources:
     showroom: {repo_url: https://github.com/jkershawrh/virtualization-ai-foundations, revision: "68e3980d0a1df4ff20d36e6e76f8518781345239", playbook: showroom/default-site.yml, start_path: showroom/content}
-    workload: {repo_url: https://github.com/jkershawrh/virtualization-ai-foundations, revision: "68e3980d0a1df4ff20d36e6e76f8518781345239", deploy_path: charts/virtualization-ai-foundations}
+    workload: {repo_url: https://github.com/jkershawrh/virtualization-ai-foundations, revision: "7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da", deploy_path: charts/virtualization-ai-foundations}
   runtime:
     deployment_type: helm
     deployment_class: shared_namespace
@@ -89,8 +90,9 @@ proposed_launchpad_intake:
     cleanup_owner: launchpad-workshop-reclaim
     workload:
       helm_values:
-        workload_image: localhost/virtualization-ai-adapter@sha256:b55c096b006610e0c910ef133cbf0992bf24140ab872f233588a8420855e18ec
-        presentation_image: localhost/virtualization-ai-presentation@sha256:85bd11634e59e565ab882d21fc70274fa133712ca5afbc5ea2c29e20f82b2df5
+        values_overlay: charts/virtualization-ai-foundations/values.published.yaml
+        workload_image: ghcr.io/jkershawrh/virtualization-ai-foundations-adapter@sha256:429d27ecd1eaaec98be8e8d252925fe8dd6b0f525d0c5f06f65d1a6adba6d9a9
+        presentation_image: ghcr.io/jkershawrh/virtualization-ai-foundations-presentation@sha256:fb4869e465beb513636ad574d9ee1974d82431b226099e6d8933f24263b9d61c
         presentation_enabled: true
       runtime_secret_name: virtualization-ai-model-runtime
       runtime_secret_value_path: adapter.model.apiKeySecret.name

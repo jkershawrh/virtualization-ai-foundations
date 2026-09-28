@@ -1,0 +1,22 @@
+# Published linux/amd64 release built from source revision
+# 7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da. These exact GHCR digests
+# passed the strict release gate and were verified after an exact-digest pull.
+adapter:
+  image:
+    repository: ghcr.io/jkershawrh/virtualization-ai-foundations-adapter
+    tag: git-7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da
+    digest: sha256:429d27ecd1eaaec98be8e8d252925fe8dd6b0f525d0c5f06f65d1a6adba6d9a9
+    pullPolicy: IfNotPresent
+
+presentation:
+  image:
+    repository: ghcr.io/jkershawrh/virtualization-ai-foundations-presentation
+    tag: git-7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da
+    digest: sha256:fb4869e465beb513636ad574d9ee1974d82431b226099e6d8933f24263b9d61c
+    pullPolicy: IfNotPresent
+
+vm:
+  containerDisk:
+    repository: quay.io/containerdisks/fedora
+    tag: "41"
+    digest: sha256:ae48475e213bd3d34415e8f123f5a79166b1eb142fdf851654e3adb9d02fb73f

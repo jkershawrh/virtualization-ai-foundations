@@ -1,3 +1,4 @@
+import json
 import subprocess
 import unittest
 from pathlib import Path
@@ -36,9 +37,11 @@ class PackagingTests(unittest.TestCase):
         self.assertEqual(values["adapter"]["model"]["apiKeySecret"]["name"], "")
         self.assertNotIn("password", str(values).lower())
 
-    def test_release_images_require_digests(self):
+    def test_local_candidate_images_require_digests(self):
         candidate = CHART / "values.candidate.yaml"
         values = yaml.safe_load(candidate.read_text())
+        self.assertEqual(values["adapter"]["image"]["repository"], "localhost/virtualization-ai-adapter")
+        self.assertEqual(values["presentation"]["image"]["repository"], "localhost/virtualization-ai-presentation")
         for image in (
             values["adapter"]["image"],
             values["presentation"]["image"],
@@ -54,6 +57,43 @@ class PackagingTests(unittest.TestCase):
         self.assertEqual(render.returncode, 0, render.stderr)
         self.assertIn(values["adapter"]["image"]["digest"], render.stdout)
         self.assertIn(values["presentation"]["image"]["digest"], render.stdout)
+
+    def test_published_images_are_ghcr_digest_pinned_and_render(self):
+        published = CHART / "values.published.yaml"
+        values = yaml.safe_load(published.read_text())
+        for component in ("adapter", "presentation"):
+            image = values[component]["image"]
+            self.assertTrue(image["repository"].startswith("ghcr.io/jkershawrh/"))
+            self.assertRegex(image["digest"], r"^sha256:[0-9a-f]{64}$")
+            self.assertRegex(image["tag"], r"^git-[0-9a-f]{40}$")
+        render = subprocess.run(
+            ["helm", "template", "virtualization-ai", str(CHART), "-f", str(published)],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(render.returncode, 0, render.stderr)
+        for component in ("adapter", "presentation"):
+            image = values[component]["image"]
+            self.assertIn(f'{image["repository"]}@{image["digest"]}', render.stdout)
+
+    def test_published_receipts_are_distinct_and_non_certifying(self):
+        values = yaml.safe_load((CHART / "values.published.yaml").read_text())
+        handoff = yaml.safe_load((ROOT / "handoff/launchpad-handoff.yaml").read_text())
+        for component, artifact_key in (("adapter", "workload"), ("presentation", "presentation")):
+            receipt = json.loads(
+                (ROOT / f"handoff/evidence/published-{component}-release.json").read_text()
+            )
+            expected_image = (
+                f'{values[component]["image"]["repository"]}@'
+                f'{values[component]["image"]["digest"]}'
+            )
+            self.assertEqual(receipt["evidence_scope"], "published_immutable_candidate")
+            self.assertEqual(receipt["image"], expected_image)
+            self.assertEqual(receipt["scan"]["severity_counts"]["high"], 0)
+            self.assertEqual(receipt["scan"]["severity_counts"]["critical"], 0)
+            self.assertEqual(receipt["certification"], "NOT CLAIMED")
+            self.assertEqual(receipt["live_openshift_validation"], "NOT RUN")
+            self.assertEqual(handoff["factory_receipt"]["artifacts"][artifact_key]["image"], expected_image)
 
 
 if __name__ == "__main__":

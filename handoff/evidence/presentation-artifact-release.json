@@ -1,5 +1,6 @@
 {
   "schema_version": "demo-story.redhat-intel.com/artifact-release/v1",
+  "evidence_scope": "local_candidate_only",
   "component": "presentation",
   "source_repository": "https://github.com/jkershawrh/virtualization-ai-foundations",
   "source_revision": "68e3980d0a1df4ff20d36e6e76f8518781345239",

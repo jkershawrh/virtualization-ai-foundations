@@ -1,0 +1,45 @@
+{
+  "schema_version": "demo-story.redhat-intel.com/artifact-release/v1",
+  "evidence_scope": "published_immutable_candidate",
+  "component": "adapter",
+  "source_repository": "https://github.com/jkershawrh/virtualization-ai-foundations",
+  "source_revision": "7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da",
+  "image": "ghcr.io/jkershawrh/virtualization-ai-foundations-adapter@sha256:429d27ecd1eaaec98be8e8d252925fe8dd6b0f525d0c5f06f65d1a6adba6d9a9",
+  "architecture": "linux/amd64",
+  "workflow": {
+    "run_id": 36473568680,
+    "url": "https://github.com/jkershawrh/virtualization-ai-foundations/actions/runs/36473568680",
+    "conclusion": "success",
+    "dispatch_source_matched": true
+  },
+  "scan": {
+    "scanner": "Grype 0.97.1",
+    "scope": "complete inventory; gate includes findings without a published fix",
+    "severity_counts": {"critical": 0, "high": 0, "medium": 6, "low": 0, "negligible": 0, "unknown": 0},
+    "hard_gate": "PASS: zero HIGH or CRITICAL findings",
+    "full_report_artifact": "virtualization-ai-101-adapter-7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da/vulnerability-full-adapter.json",
+    "full_report_sha256": "6969b2d04e20fa42c145b4c54f4da183b698a133ce5846e88f4a452b210439af",
+    "gate_report_sha256": "6a912653ebc6a54ed4b28c56f6f0c4b344f8c2bc25cf33e4513716f3e9a43212"
+  },
+  "sbom": {
+    "format": "SPDX JSON",
+    "packages": 32,
+    "artifact": "virtualization-ai-101-adapter-7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da/sbom-adapter.spdx.json",
+    "sha256": "0b77d73a89051a5d6ab315c35d580924774ea0cbb357fcf619afc4afbc713844"
+  },
+  "supply_chain": {
+    "exact_digest_pull": "PASS",
+    "source_revision_label": "PASS",
+    "oidc_signature_verification": "PASS",
+    "spdx_attestation_verification": "PASS",
+    "provenance_attestation_verification": "PASS",
+    "verification_artifact": "virtualization-ai-101-published-adapter-7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da",
+    "signature_verification_sha256": "ccddf88a7df7455fbd0f736324aae0b4305db4af20f79dcdf81c99118129c17c",
+    "sbom_attestation_verification_sha256": "262c3032d67ab785099ed041a34ce9ac076dbd4965d5e6b513fa2a1477887b4d",
+    "provenance_attestation_verification_sha256": "9a6ee81388ba6e93114d390e1cf3e9a01c1d0e7b6692565a114048c8451cff47"
+  },
+  "retention_days": 90,
+  "certification": "NOT CLAIMED",
+  "live_openshift_validation": "NOT RUN",
+  "created_at": "2026-09-28T19:41:29Z"
+}

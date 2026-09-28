@@ -1,0 +1,31 @@
+{
+  "schema_version": "demo-story.redhat-intel.com/published-release/v1",
+  "evidence_scope": "published_immutable_candidates",
+  "source_revision": "7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da",
+  "workflow_run": "https://github.com/jkershawrh/virtualization-ai-foundations/actions/runs/36473568680",
+  "workflow_conclusion": "success",
+  "platform": "linux/amd64",
+  "images": {
+    "adapter": "ghcr.io/jkershawrh/virtualization-ai-foundations-adapter@sha256:429d27ecd1eaaec98be8e8d252925fe8dd6b0f525d0c5f06f65d1a6adba6d9a9",
+    "presentation": "ghcr.io/jkershawrh/virtualization-ai-foundations-presentation@sha256:fb4869e465beb513636ad574d9ee1974d82431b226099e6d8933f24263b9d61c"
+  },
+  "gates": {
+    "exact_source_checkout": "PASS",
+    "local_project_checks": "PASS",
+    "complete_vulnerability_inventory": "PASS",
+    "zero_high_or_critical": "PASS",
+    "spdx_sbom": "PASS",
+    "exact_digest_pull": "PASS",
+    "oidc_signature": "PASS",
+    "provenance_attestation": "PASS",
+    "sbom_attestation": "PASS",
+    "verification_evidence_retained": "PASS"
+  },
+  "scan_counts": {
+    "adapter": {"critical": 0, "high": 0, "medium": 6},
+    "presentation": {"critical": 0, "high": 0, "medium": 4}
+  },
+  "certification": "NOT CLAIMED",
+  "live_openshift_validation": "NOT RUN",
+  "created_at": "2026-09-28T19:41:29Z"
+}

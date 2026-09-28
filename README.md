@@ -65,17 +65,17 @@ conspicuously labeled rehearsal evidence.
 
 ## Deploy the chart
 
-Development defaults use local tags for the two authored images. The
-`values.candidate.yaml` overlay pins the built `linux/amd64` candidate digests.
-Load its OCI archives into the target runtime or mirror the images into an
-approved registry and change only the repository names.
+Development defaults use local tags for the two authored images.
+`values.candidate.yaml` preserves the earlier local-only OCI candidates;
+`values.published.yaml` pins the signed, attested `linux/amd64` GHCR candidates
+built from source revision `7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da`.
 
 ```sh
 helm upgrade --install virtualization-ai-101 \
   charts/virtualization-ai-foundations \
   --namespace virtualization-ai-101 \
   --create-namespace \
-  -f charts/virtualization-ai-foundations/values.candidate.yaml \
+  -f charts/virtualization-ai-foundations/values.published.yaml \
   --set vm.sshAuthorizedKey='ssh-ed25519 REPLACE_AT_RUNTIME'
 ```
 
@@ -106,4 +106,5 @@ capacity, reclaim behavior, certification, and promotion.
 The immutable release workflow is documented in
 `docs/immutable-release.md`. Local candidate digests and published GHCR digests
 are recorded separately so a local build cannot be mistaken for publication
-evidence.
+evidence. Publication and supply-chain verification do not constitute
+Launchpad certification or a live OpenShift result.

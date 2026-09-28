@@ -23,9 +23,18 @@ Every external GitHub Action is pinned to a full commit SHA. `publish=false`
 runs the validation, build, scan, and SBOM gates without changing GHCR.
 
 The checked-in `values.candidate.yaml` and local artifact receipts describe the
-local OCI candidates. They must not be treated as published evidence. After a
-successful publishing run, a separate receipt and Helm values overlay record
-the GHCR digest identities and workflow run that produced and verified them.
+local OCI candidates. They must not be treated as published evidence.
+`values.published.yaml` and the `published-*-release.json` receipts separately
+record the GHCR digest identities and successful workflow run that produced and
+verified them.
+
+The first strict run correctly stopped before publication after full scans
+found HIGH vulnerabilities in the original runtime bases. Runtime hardening was
+then committed without weakening the gate. Run
+[`36473568680`](https://github.com/jkershawrh/virtualization-ai-foundations/actions/runs/36473568680)
+built exact source revision `7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da`,
+published both hardened images, verified exact-digest pulls, and verified their
+GitHub OIDC signatures plus SPDX and provenance attestations.
 
 This release pipeline does not certify the lab. It does not replace live
 OpenShift qualification, managed model/Intel Xeon placement evidence, capacity
