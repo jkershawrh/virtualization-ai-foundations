@@ -1,0 +1,58 @@
+= Export the evidence map
+:navtitle: 6. Evidence
+
+== Build the learner artifact
+
+[source,bash,role="execute"]
+----
+HEALTHY=/tmp/virtualization-ai-healthy.json
+UNAVAILABLE=/tmp/virtualization-ai-unavailable.json
+
+jq -n \
+  --slurpfile healthy "$HEALTHY" \
+  --slurpfile unavailable "$UNAVAILABLE" \
+  '{
+    schema_version: "learner-evidence-map/v1",
+    claims: [
+      {
+        claim: "The request originated inside the VM and crossed the Service boundary",
+        evidence_ids: ["vm-request-receipt", "service-route-receipt"],
+        request_id: $healthy[0].request_id,
+        source_state: $healthy[0].source_state
+      },
+      {
+        claim: "A named Intel Xeon CPU model produced a schema-valid advisory result",
+        evidence_ids: ["model-invocation-receipt", "output-validation-receipt"],
+        model: $healthy[0].model,
+        ai_participated: $healthy[0].ai_participated
+      },
+      {
+        claim: "The unavailable condition returned no model result and no action authority",
+        evidence_ids: ["model-unavailable-receipt"],
+        request_id: $unavailable[0].request_id,
+        ai_participated: $unavailable[0].ai_participated,
+        final_decision_owner: $unavailable[0].authority.final_decision_owner
+      }
+    ],
+    limitations: [
+      "No performance, cost, capacity, quality, or fleet-scale claim was tested",
+      "The model output is advisory; the human operator owns the decision",
+      "REHEARSAL or OFFLINE state cannot satisfy a live inference claim"
+    ]
+  }' | tee "$HOME/virtualization-ai-evidence-map.json"
+----
+
+== Review your claim boundary
+
+Your artifact should prove four separate facts:
+
+1. the VM-origin request and Service path;
+2. model participation and identity;
+3. deterministic output validation;
+4. human-owned authority and fail-closed behavior.
+
+It should not claim performance, savings, autonomous action, migration success,
+capacity, resilience, or certification.
+
+[.next-nav]
+xref:99-conclusion.adoc[Finish the 101 journey →]

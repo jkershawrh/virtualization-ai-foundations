@@ -1,0 +1,40 @@
+= Exercise safe failure
+:navtitle: 5. Failure
+
+== Use the same path with a changed condition
+
+[source,bash,role="execute"]
+----
+FAILURE_REQUEST_ID=$(uuidgen | tr '[:upper:]' '[:lower:]')
+printf '%s' "$FAILURE_REQUEST_ID" | tee /tmp/virtualization-ai-failure-request-id
+----
+
+[source,bash,role="execute",subs=attributes+]
+----
+FAILURE_REQUEST_ID=$(cat /tmp/virtualization-ai-failure-request-id)
+virtctl ssh --identity-file={ssh_key_path} -n {namespace} lab@{vm_name} -- \
+  sudo /usr/local/bin/virtualization-ai-client model-unavailable "$FAILURE_REQUEST_ID" | \
+  tee /tmp/virtualization-ai-unavailable.json
+----
+
+== Verify fail-closed behavior
+
+[source,bash,role="execute"]
+----
+jq '{request_id, source_state, condition, ai_participated, model, result, validation, authority}' \
+  /tmp/virtualization-ai-unavailable.json
+----
+
+Expected evidence:
+
+* `condition` is `model-unavailable`;
+* `ai_participated` is `false`;
+* `model` and `result` are `null`;
+* no action was executed or authorized;
+* the human operator retains the decision.
+
+This is a controlled current-session failure condition. It tests the adapter's
+boundary; it does not claim an unscheduled outage occurred.
+
+[.next-nav]
+xref:06-evidence.adoc[Next: export the evidence map →]

@@ -1,0 +1,37 @@
+schema_version: demo-story.redhat-intel.com/claim-registry/v1
+claims:
+  - id: vm-origin
+    statement: The request originated inside the named operations VM.
+    allowed_source_states: [LIVE]
+    required_evidence: [vm-request-receipt]
+    excluded_inference: A presenter, test harness, or pod-origin request does not satisfy this claim.
+  - id: service-path
+    statement: The VM request crossed the named OpenShift Service boundary to the adapter.
+    allowed_source_states: [LIVE]
+    required_evidence: [vm-request-receipt, service-route-receipt]
+    excluded_inference: Co-located running resources do not prove connectivity.
+  - id: governed-ai-participation
+    statement: A named model on the declared Intel Xeon CPU hardware class produced schema-valid advisory output.
+    allowed_source_states: [LIVE]
+    required_evidence: [model-invocation-receipt, output-validation-receipt]
+    excluded_inference: A fixture, unnamed model, or unvalidated response cannot satisfy this claim.
+  - id: fail-closed
+    statement: Controlled model unavailability returned no invented advisory result and preserved human authority.
+    allowed_source_states: [LIVE, REHEARSAL]
+    required_evidence: [model-unavailable-receipt]
+    excluded_inference: The controlled condition does not prove an unscheduled provider outage occurred.
+  - id: human-authority
+    statement: The model remained advisory and no action was permitted.
+    allowed_source_states: [LIVE, REHEARSAL, OFFLINE]
+    required_evidence: [end-to-end-evidence]
+    excluded_inference: No autonomous operation, remediation, or approval is claimed.
+excluded_claims:
+  - performance
+  - throughput
+  - latency
+  - cost_or_savings
+  - capacity
+  - quality
+  - migration_success
+  - fleet_scale
+  - launchpad_certification

@@ -1,0 +1,30 @@
+{
+  "schema_version": "analysis-response/v1",
+  "request_id": "22222222-2222-4222-8222-222222222222",
+  "source_state": "REHEARSAL",
+  "condition": "model-unavailable",
+  "ai_participated": false,
+  "model": null,
+  "result": null,
+  "validation": {
+    "schema_valid": true,
+    "category_valid": false
+  },
+  "authority": {
+    "model": "advisory-only",
+    "final_decision_owner": "human operator",
+    "actions_permitted": []
+  },
+  "evidence": [
+    {
+      "id": "vm-request-receipt",
+      "producer": "operations-vm",
+      "observed_at": "2026-09-28T12:05:00Z"
+    },
+    {
+      "id": "model-unavailable-receipt",
+      "producer": "ai-analysis-adapter",
+      "observed_at": "2026-09-28T12:05:01Z"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+name: virtualization-ai-101
+title: Virtualization + AI 101
+version: master
+start_page: ROOT:index.adoc
+nav:
+  - modules/ROOT/nav.adoc
+asciidoc:
+  attributes:
+    namespace: virtualization-ai-101
+    vm_name: operations-vm
+    adapter_service: ai-analysis
+    ssh_key_path: /opt/app-root/ssh/lab-key

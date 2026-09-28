@@ -1,0 +1,45 @@
+= Virtualization + AI 101 — Trace a VM to Governed AI
+:navtitle: Welcome
+
+== The decision
+
+A virtual machine and an AI service can share an OpenShift cluster without
+proving that the application inside the VM actually reached a model. In this
+lab you will follow one request from a VM-hosted workload through OpenShift
+platform services to governed Intel Xeon CPU inference and back to a human
+operator.
+
+This is a *101 trace-and-explain lab*. You inspect an established contract and
+runtime. The future 201 lab is separate: there, the learner must author the
+VM-to-AI contract, configure identity and networking, test denial and failure,
+and prove cleanup.
+
+== Learner outcome
+
+At the end you can:
+
+* identify the VM/VMI, Service, adapter, model, validation, and authority boundaries;
+* prove that a request originated inside the VM;
+* distinguish platform connectivity from AI participation;
+* compare a healthy request with an unavailable-model condition;
+* export a claim-to-evidence map for review.
+
+== Journey
+
+[cols="1,3,1",options="header"]
+|===
+| Step | Evidence question | Time
+| Verify | Which runtime objects are present and ready? | 10 min
+| Trace | Where are the network, inference, and authority boundaries? | 10 min
+| Invoke | Did the request originate inside the VM? | 15 min
+| Inspect | Which model ran and what deterministic checks accepted its output? | 15 min
+| Failure | Does the same path fail closed without inventing an AI result? | 10 min
+| Evidence | Can you state exactly what was and was not proven? | 15 min
+|===
+
+No cost, performance, or capacity result is pre-authored in this lab. A
+`REHEARSAL` or `OFFLINE` response demonstrates mechanics only; it is not live
+inference proof.
+
+[.next-nav]
+xref:01-verify.adoc[Begin: verify the runtime →]

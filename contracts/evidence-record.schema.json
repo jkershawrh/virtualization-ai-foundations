@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/virtualization-ai/contracts/evidence-record-v1.schema.json",
+  "title": "evidence-record/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "request_sha256", "origin", "service", "adapter", "response"],
+  "properties": {
+    "schema_version": { "const": "evidence-record/v1" },
+    "request_id": { "type": "string", "format": "uuid" },
+    "request_sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+    "origin": {
+      "type": "object",
+      "required": ["kind", "namespace", "vm_name", "guest_hostname"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": { "const": "virtual-machine" },
+        "namespace": { "type": "string" },
+        "vm_name": { "type": "string" },
+        "guest_hostname": { "type": "string" }
+      }
+    },
+    "service": {
+      "type": "object",
+      "required": ["dns", "port"],
+      "additionalProperties": false,
+      "properties": {
+        "dns": { "type": "string", "minLength": 1 },
+        "port": { "type": "integer", "minimum": 1, "maximum": 65535 }
+      }
+    },
+    "adapter": {
+      "type": "object",
+      "required": ["name", "version", "mode"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "const": "ai-analysis-adapter" },
+        "version": { "type": "string", "minLength": 1 },
+        "mode": { "enum": ["live", "rehearsal", "offline"] }
+      }
+    },
+    "response": { "$ref": "analysis-response.schema.json" }
+  }
+}

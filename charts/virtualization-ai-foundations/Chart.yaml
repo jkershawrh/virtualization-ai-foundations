@@ -1,0 +1,10 @@
+apiVersion: v2
+name: virtualization-ai-foundations
+description: Independent Virtualization + AI 101 candidate for VM-origin evidence tracing
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+annotations:
+  factory.redhat.com/track: virtualization-ai
+  factory.redhat.com/level: "101"
+  factory.redhat.com/release-state: candidate

@@ -1,0 +1,370 @@
+version: 1
+status: reviewed
+
+source:
+  name: virtualization-ai-foundations
+  kind: composite-discovery
+  location: /Users/jkershaw/Documents/virtualization-ai-201
+  revision: uninitialized-candidate
+  discovered_at: "2026-09-28"
+  inspected_artifacts:
+    - /Users/jkershaw/Documents/ai-virtual-agent@6c1ba5ca3478da438c91c684e19844c7bcf1b195/README.md
+    - /Users/jkershaw/Documents/ai-virtual-agent@6c1ba5ca3478da438c91c684e19844c7bcf1b195/docs/virtual-agents-architecture.md
+    - /Users/jkershaw/Documents/ai-virtual-agent@6c1ba5ca3478da438c91c684e19844c7bcf1b195/docs/semantic-routing.md
+    - /Users/jkershaw/Documents/ai-virtual-agent@6c1ba5ca3478da438c91c684e19844c7bcf1b195/backend/app/api/v1/chat.py
+    - /Users/jkershaw/Documents/ai-virtual-agent@6c1ba5ca3478da438c91c684e19844c7bcf1b195/backend/app/services/chat.py
+    - /Users/jkershaw/Documents/ai-virtual-agent@6c1ba5ca3478da438c91c684e19844c7bcf1b195/backend/app/services/semantic_routing.py
+    - /Users/jkershaw/Documents/ai-virtual-agent@6c1ba5ca3478da438c91c684e19844c7bcf1b195/deploy/cluster/helm/
+    - /Users/jkershaw/Documents/ocp-virt-roadshow-2026-showroom@5d296c9c9fbe773af09c16935c78b89baebd1f81/content/modules/ROOT/pages/module-01-intro.adoc
+    - /Users/jkershaw/Documents/ocp-virt-roadshow-2026-showroom@5d296c9c9fbe773af09c16935c78b89baebd1f81/content/modules/ROOT/pages/module-06-networking.adoc
+    - /Users/jkershaw/Documents/ocp-virt-roadshow-2026-showroom@5d296c9c9fbe773af09c16935c78b89baebd1f81/content/modules/ROOT/pages/module-07-workingvms.adoc
+    - /Users/jkershaw/Documents/triforce@c6c17f47c0b9e4750053271514252580ec4ea3d2/content-501/
+    - /Users/jkershaw/Documents/triforce@c6c17f47c0b9e4750053271514252580ec4ea3d2/infrastructure/helm/templates/legacy-vm.yaml
+    - /Users/jkershaw/Documents/triforce@c6c17f47c0b9e4750053271514252580ec4ea3d2/infrastructure/helm/templates/scada-vm.yaml
+    - /Users/jkershaw/Documents/triforce@c6c17f47c0b9e4750053271514252580ec4ea3d2/infrastructure/helm/templates/edge-agent.yaml
+    - /Users/jkershaw/Documents/triforce@c6c17f47c0b9e4750053271514252580ec4ea3d2/tests/test_virt_edge.py
+    - /Users/jkershaw/Documents/triforce@c6c17f47c0b9e4750053271514252580ec4ea3d2/frontend/src/acts/virt/
+  discrepancies:
+    - id: source-level-overstatement
+      status: verified
+      summary: Triforce labels its read-mostly coexistence lab as 501, but the learner does not perform fleet-scale migration, capacity qualification, resilience, or certification work.
+      source: /Users/jkershaw/Documents/triforce/content-501/modules/ROOT/pages/
+    - id: vm-origin-proof-missing
+      status: verified
+      summary: The test named for a SCADA VM call invokes the model Service from the test harness; it does not execute the request inside the VM.
+      source: /Users/jkershaw/Documents/triforce/tests/test_virt_edge.py
+    - id: adjacent-not-integrated
+      status: verified
+      summary: The AI repository has no KubeVirt or VirtualMachine integration, while the roadshow has no implemented AI request path.
+      source: Cross-repository text and manifest inventory
+    - id: quantitative-claims-unbound
+      status: verified
+      summary: Several Triforce CPU, memory, utilization, cost, and hardware claims are authored constants rather than current-session infrastructure evidence.
+      source: /Users/jkershaw/Documents/triforce/frontend/src/acts/virt/ and /Users/jkershaw/Documents/triforce/content-501/
+    - id: runtime-compatibility-unproven
+      status: blocked
+      summary: No source provides a clean, repeatable, one-seat run proving the proposed independent VM-to-managed-AI journey on a named supported OpenShift and OpenShift Virtualization release.
+      source: No qualifying receipt found
+
+intent:
+  primary_user: Application owners and platform engineers evaluating how an established VM-hosted application can consume a managed AI service on OpenShift.
+  workload: A small application inside a KubeVirt VirtualMachine sends an unstructured operations note to a namespace-local AI analysis adapter, which calls a managed model endpoint and returns a bounded, inspectable result.
+  recognized_problem: Co-location of a VM and an AI pod is often presented as integration, but teams need to see the request path, trust boundaries, model participation, failure behavior, and human authority before approving a pattern.
+  audience_decision: Approve a level-101 foundation that teaches learners to trace and explain one VM-to-AI interaction; fund level 201 only after learners can build and qualify the integration themselves.
+  desired_outcome: The learner can trace a real request across the guest, cluster Service, adapter, and model boundary; distinguish networking evidence from AI evidence; explain the failure boundary; and produce a source-bound evidence record.
+
+architecture:
+  actors:
+    - id: learner
+      name: Learner
+      kind: human
+      responsibility: Trigger the request, inspect each boundary, compare a changed condition, and decide whether the proof is sufficient.
+      status: reviewed
+      source: Independent learner outcome
+    - id: instructor
+      name: Instructor or presenter
+      kind: human
+      responsibility: Guide the causal reveal, keep source state explicit, and own any environment-changing failure exercise.
+      status: reviewed
+      source: Lab-factory journey contract
+  runtime_objects:
+    - id: showroom
+      name: Showroom lab guide
+      kind: web-application
+      responsibility: Deliver the guided 60–75 minute learner path and evidence worksheet.
+      status: future-state
+      source: Independent implementation recommendation
+    - id: presentation
+      name: Red Hat × Intel presentation
+      kind: web-application
+      responsibility: Explain the decision in 5–7 minutes and invoke only typed live-proof adapters.
+      status: scaffolded
+      source: /Users/jkershaw/Documents/virtualization-ai-201
+    - id: vm
+      name: Operations VM
+      kind: kubevirt.io/v1 VirtualMachine
+      responsibility: Host the established sample application and originate the proof request.
+      status: future-state
+      source: Reusable KubeVirt patterns in Triforce and the roadshow
+    - id: vmi
+      name: Operations VM instance
+      kind: kubevirt.io/v1 VirtualMachineInstance
+      responsibility: Provide the running guest, pod-network interface, and observable placement for the VM.
+      status: future-state
+      source: OpenShift Virtualization runtime pattern
+    - id: ai-service
+      name: ai-analysis Service
+      kind: v1 Service
+      responsibility: Provide stable namespace-local DNS and port routing from the VM to the adapter.
+      status: future-state
+      source: Roadshow Service pattern
+    - id: ai-adapter
+      name: AI analysis adapter
+      kind: apps/v1 Deployment
+      responsibility: Validate requests, call one configured managed model, validate bounded output, expose source state, and emit correlated evidence.
+      status: future-state
+      source: Independent contract-first workload
+    - id: model-endpoint
+      name: Governed Intel Xeon CPU inference endpoint
+      kind: external inference service
+      responsibility: Transform the bounded unstructured note into the requested category, summary, and rationale.
+      status: future-state
+      source: OpenAI-compatible CPU inference gateway selected at deployment; runtime response must provide model and hardware identity
+    - id: evidence-api
+      name: Evidence endpoint
+      kind: HTTP API
+      responsibility: Return the current request identifier, VM identity, service target, adapter state, model identity, timestamps, and validation result without exposing credentials or raw secrets.
+      status: future-state
+      source: Independent evidence contract
+  boundaries:
+    - id: guest-boundary
+      name: Guest operating-system boundary
+      kind: compute-and-identity
+      responsibility: Separate evidence originating inside the VM from evidence produced by the cluster or presenter.
+      status: reviewed
+      source: KubeVirt runtime model
+    - id: namespace-network
+      name: Namespace service-network boundary
+      kind: network
+      responsibility: Govern VM-to-Service traffic with DNS, Service selection, and NetworkPolicy.
+      status: reviewed
+      source: Roadshow networking and Service modules
+    - id: inference-trust
+      name: Managed inference boundary
+      kind: external-service
+      responsibility: Keep model credentials server-side and expose model identity and failure state through the adapter.
+      status: reviewed
+      source: AI Virtual Agent and semantic-routing adapter patterns
+    - id: human-authority
+      name: Human decision boundary
+      kind: authority
+      responsibility: Keep the model advisory; the learner or operator decides what to do with the result.
+      status: reviewed
+      source: Independent safety decision
+  external_dependencies:
+    - id: openshift-virtualization
+      name: Red Hat OpenShift Virtualization
+      kind: platform-operator
+      responsibility: Run and manage the VirtualMachine and VirtualMachineInstance.
+      status: verified-as-source-capability
+      source: Roadshow modules and Triforce manifests
+    - id: openshift-network
+      name: OpenShift cluster networking
+      kind: platform-service
+      responsibility: Provide VM pod-network attachment, Service DNS, routing, and NetworkPolicy enforcement.
+      status: verified-as-source-capability
+      source: Roadshow networking and working-VM modules
+    - id: model-credential
+      name: Managed-model credential Secret
+      kind: secret-reference
+      responsibility: Supply the adapter credential at runtime without exposing it to the VM, browser, fixture, or source repository.
+      status: future-state
+      source: Independent security contract
+  flows:
+    - id: vm-to-ai-analysis
+      name: VM-originated AI analysis request
+      kind: request-and-evidence
+      trigger: The learner submits a bounded operations note from inside the running VM.
+      outcome: The learner receives a schema-valid advisory result and can map every evidence item to the runtime object that produced it.
+      edges:
+        - from: learner
+          to: vm
+          purpose: Trigger the checked-in VM client with a selected note.
+          protocol: virtctl SSH or console; exact access method remains an activation decision
+          evidence_ids: [vm-request-receipt]
+        - from: vm
+          to: ai-service
+          purpose: Submit the versioned analysis request with a correlation identifier.
+          protocol: HTTP JSON over namespace-local Service DNS
+          evidence_ids: [vm-request-receipt, service-route-receipt]
+        - from: ai-service
+          to: ai-adapter
+          purpose: Route the request to the selected adapter pod.
+          protocol: Kubernetes Service TCP/HTTP
+          evidence_ids: [service-route-receipt]
+        - from: ai-adapter
+          to: model-endpoint
+          purpose: Invoke the configured model with only the bounded note and task instructions.
+          protocol: OpenAI-compatible HTTPS JSON
+          evidence_ids: [model-invocation-receipt]
+        - from: ai-adapter
+          to: evidence-api
+          purpose: Publish redacted, current-request provenance and validation state.
+          protocol: Internal HTTP JSON
+          evidence_ids: [end-to-end-evidence]
+        - from: ai-adapter
+          to: vm
+          purpose: Return category, summary, rationale, model identity, source state, and request identifier.
+          protocol: HTTP JSON response
+          evidence_ids: [model-invocation-receipt, output-validation-receipt]
+    - id: unavailable-model
+      name: Managed model unavailable
+      kind: failure
+      trigger: The instructor selects the predeclared unavailable-endpoint condition or the health gate reports the model unavailable.
+      outcome: The adapter returns an explicit unavailable state, emits no fabricated AI result, and the learner can identify the failed boundary.
+      edges:
+        - from: ai-adapter
+          to: model-endpoint
+          purpose: Attempt the same bounded request under the unavailable condition.
+          protocol: OpenAI-compatible HTTPS JSON with bounded timeout
+          evidence_ids: [model-unavailable-receipt]
+        - from: ai-adapter
+          to: vm
+          purpose: Return a typed fail-closed error with the same correlation identifier.
+          protocol: HTTP JSON error response
+          evidence_ids: [model-unavailable-receipt]
+
+operational_pattern:
+  name: Verify, trace, invoke, inspect, change, explain
+  rationale: The level-101 outcome is understanding one established VM-to-AI path, not building or operating the full stack.
+  steps:
+    - id: verify
+      label: Verify runtime identities
+      question: Which VirtualMachine, VirtualMachineInstance, Service, adapter pod, and model endpoint are actually configured?
+      flow_ids: [vm-to-ai-analysis]
+      evidence_ids: [runtime-inventory]
+    - id: trace
+      label: Trace the network and trust boundaries
+      question: Where does the request leave the guest, enter the cluster Service, and cross the managed-inference boundary?
+      flow_ids: [vm-to-ai-analysis]
+      evidence_ids: [service-route-receipt]
+    - id: invoke
+      label: Invoke the real request from the VM
+      question: Can the learner prove the request originated inside the guest rather than from a presenter or test pod?
+      flow_ids: [vm-to-ai-analysis]
+      evidence_ids: [vm-request-receipt, end-to-end-evidence]
+    - id: inspect
+      label: Inspect model participation and validation
+      question: Which model ran, what could it see, what did it return, and which deterministic checks accepted the output?
+      flow_ids: [vm-to-ai-analysis]
+      evidence_ids: [model-invocation-receipt, output-validation-receipt]
+    - id: change
+      label: Exercise the unavailable boundary
+      question: Does the same path fail visibly and safely when the model endpoint is unavailable?
+      flow_ids: [unavailable-model]
+      evidence_ids: [model-unavailable-receipt]
+    - id: explain
+      label: Produce the evidence map
+      question: Can the learner separate connectivity proof, AI proof, validation, and human authority in one reviewable artifact?
+      flow_ids: [vm-to-ai-analysis, unavailable-model]
+      evidence_ids: [learner-evidence-map]
+  changed_condition: The model endpoint changes from healthy to a predeclared unavailable condition while the VM, Service, request schema, and correlation identifier remain visible.
+  close: The learner submits an evidence map and states whether the result proves coexistence, connectivity, AI participation, safe failure, and nothing more.
+
+evidence:
+  - id: runtime-inventory
+    name: Runtime object inventory
+    source: OpenShift and KubeVirt APIs
+    collection: Current-session API response or command output
+    supports: The named VM, VMI, Service, adapter Deployment, pod, and endpoint configuration exist for this session.
+    status: future-state
+  - id: vm-request-receipt
+    name: Guest-origin request receipt
+    source: Checked-in VM client and guest log
+    collection: Correlation identifier, guest hostname, request hash, and timestamp emitted inside the VM
+    supports: The request originated inside the demonstrated VM.
+    status: future-state
+  - id: service-route-receipt
+    name: Service and network receipt
+    source: Service endpoints, NetworkPolicy, and adapter access log
+    collection: Current-session selector, endpoint pod, source identity, and correlation identifier
+    supports: The request crossed the displayed namespace-local network path.
+    status: future-state
+  - id: model-invocation-receipt
+    name: Model invocation receipt
+    source: AI adapter response
+    collection: Current-session model identifier, provider, source state, request identifier, and elapsed time
+    supports: A named model participated in this request.
+    status: future-state
+  - id: output-validation-receipt
+    name: Output validation receipt
+    source: AI adapter
+    collection: JSON-schema result and allowed-category validation for the current response
+    supports: The displayed advisory output passed deterministic structural checks.
+    status: future-state
+  - id: model-unavailable-receipt
+    name: Fail-closed unavailable receipt
+    source: AI adapter
+    collection: Typed error, timeout/failure class, correlation identifier, and explicit absence of model output
+    supports: The lab does not relabel unavailable or fallback output as live AI proof.
+    status: future-state
+  - id: end-to-end-evidence
+    name: Correlated end-to-end evidence record
+    source: Evidence endpoint
+    collection: Redacted current-session record joined by the request identifier
+    supports: The complete request path can be inspected without exposing credentials.
+    status: future-state
+  - id: learner-evidence-map
+    name: Learner evidence map
+    source: Lab worksheet export
+    collection: Learner-authored mapping of claim, runtime object, evidence identifier, source state, limitation, and decision
+    supports: The level-101 learner outcome was completed.
+    status: future-state
+  - id: source-capability-evidence
+    name: Source capability evidence
+    source: Three pinned evidence repositories listed above
+    collection: Read-only repository inspection on 2026-09-28
+    supports: KubeVirt VMs, Service-based VM networking, managed AI requests, and presentation cadence exist as separate reusable patterns.
+    status: verified
+
+decisions:
+  - id: foundation-level
+    owner: Lab factory reviewer
+    policy: Assign the lowest level earned by learner work, not by repository naming or component count.
+    fail_closed_behavior: Keep the candidate at 101 until learners configure and qualify the VM-to-AI contract themselves.
+    status: reviewed
+  - id: advisory-use
+    owner: Learner or application operator
+    policy: Treat the model output as advisory and require human interpretation; the adapter may validate structure but may not execute operational actions.
+    fail_closed_behavior: On missing model identity, invalid schema, timeout, or unavailable endpoint, return an explicit failure and no advisory result.
+    status: reviewed
+  - id: promotion-to-201
+    owner: Lab factory reviewer
+    policy: Promote a separate 201 candidate only when the learner authors or changes the request contract and runtime configuration, proves the allowed path and a denied or unavailable path, and produces cleanup evidence.
+    fail_closed_behavior: Do not rename or market this 101 candidate as 201 based on a preconfigured curl alone.
+    status: reviewed
+
+ai_assessment:
+  needed: true
+  kind: generative-llm
+  rationale: AI is necessary only for the selected unstructured-note interpretation outcome. Coexistence, DNS, Service routing, placement, and failure detection are deterministic platform behaviors and must not be attributed to the model.
+  tasks:
+    - Classify an unstructured operations note into one allowed advisory category.
+    - Produce a short summary and rationale grounded only in the submitted note and task instruction.
+  inputs:
+    - Versioned task instruction
+    - One bounded, synthetic operations note
+    - Allowed category enumeration
+    - Correlation identifier
+  outputs:
+    - category
+    - summary
+    - rationale
+    - model_id
+    - source_state
+    - request_id
+  model_identity_source: Live adapter response populated from the configured managed endpoint
+  hardware_identity_source: null
+  evidence_access:
+    - Submitted synthetic note
+    - Task instruction
+    - Allowed category enumeration
+  action_authority: none; the model cannot call tools, change the VM, modify cluster resources, or approve an operational action
+  validation:
+    - Response must satisfy a versioned JSON Schema.
+    - Category must be in the deterministic allowed set.
+    - Request identifier and model identity must be present for a live claim.
+    - Invalid or unavailable output must fail closed.
+  fallback: A checked-in fixture may demonstrate presentation mechanics only when visibly labeled REHEARSAL or OFFLINE; it cannot satisfy the learner proof or payoff.
+  final_decision_owner: Human learner or application operator
+
+story_mapping:
+  audience_question: What evidence proves that an established VM application reached a managed AI service, that a named model participated, and that failure remained visible and safe?
+  stakes:
+    - Co-location is not integration proof.
+    - A successful curl without model identity, provenance, validation, and source state cannot support an AI claim.
+  architecture_flow_ids: [vm-to-ai-analysis, unavailable-model]
+  live_proof_flow_ids: [vm-to-ai-analysis, unavailable-model]
+  comparison: Run the same versioned request through the healthy and unavailable conditions; preserve both results and their source states.
+  payoff: The current session either produces a correlated VM-to-model evidence chain or clearly states that the proof did not run.
+  next_journey: Close the presentation, then hand off to the 60–75 minute 101 lab. A separate 201 build lab begins only after the learner authors the contract and configuration rather than merely tracing them.

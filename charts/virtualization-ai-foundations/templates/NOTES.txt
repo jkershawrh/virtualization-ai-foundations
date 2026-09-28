@@ -1,0 +1,9 @@
+Virtualization + AI 101 candidate installed in {{ .Release.Namespace }}.
+
+Source state: {{ .Values.adapter.mode | upper }}
+VM: {{ .Values.vm.name }}
+Adapter Service: ai-analysis:8080
+
+This installation is not certified or orderable. For a LIVE AI claim, set
+adapter.mode=live, supply a Secret reference, and configure an approved Intel
+Xeon CPU inference endpoint that returns observable model and hardware identity.

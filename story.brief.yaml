@@ -1,0 +1,116 @@
+version: 1
+blueprint: demo-blueprint.yaml
+
+presentation:
+  title: "Virtualization + AI 101 — Trace a VM to a Managed AI Service"
+  audience: Application owners, virtualization administrators, platform engineers, and technical decision makers
+  desired_decision: Approve a bounded 101 foundation and keep 201 gated on learner-built integration evidence.
+  duration_minutes: 7
+  core_tension: A VM and an AI service can share a platform without proving that a real, attributable, safe request crossed the boundary.
+  cta: Trace the request in the 101 lab; build and qualify the contract in a separate 201 lab.
+
+source_material:
+  mode: composite-repository-discovery
+  items:
+    - /Users/jkershaw/Documents/ai-virtual-agent@6c1ba5ca3478da438c91c684e19844c7bcf1b195
+    - /Users/jkershaw/Documents/ocp-virt-roadshow-2026-showroom@5d296c9c9fbe773af09c16935c78b89baebd1f81
+    - /Users/jkershaw/Documents/triforce@c6c17f47c0b9e4750053271514252580ec4ea3d2
+    - demo-blueprint.yaml
+    - discovery-review.md
+    - docs/source-discrepancies.md
+  consequential_assumptions:
+    - A supported OpenShift and OpenShift Virtualization target, guest image, managed model endpoint, and credential path have not yet been selected.
+    - The independent candidate will reuse concepts and selected implementation patterns, not source application code or the roadshow curriculum wholesale.
+    - No current-session live VM-to-AI receipt exists yet; all runtime proof remains future-state until implementation and execution.
+
+architecture:
+  actors: [learner, instructor]
+  boundaries: [guest-boundary, namespace-network, inference-trust, human-authority]
+  critical_flows: [vm-to-ai-analysis, unavailable-model]
+  omitted_from_main_story:
+    - AI Virtual Agent management UI, knowledge-base ingestion, MCP catalog, and multi-runner framework
+    - Roadshow migration, storage, backup, templates, secondary networks, and complete day-two administration curriculum
+    - Triforce healthcare, financial-services, multi-agent, benchmark, edge, BitNet, and migration narratives
+    - Unsupported cost, utilization, latency, hardware-count, and migration claims
+
+beats:
+  - beat: ordinary-world
+    claim: Established applications still run inside VMs while teams want to add managed AI capabilities without first rewriting the application.
+    evidence: interpretation of the three source repositories; present without a quantitative statistic
+  - beat: stakes
+    claim: Co-location and a successful-looking response can hide where the request originated, whether a model ran, and what happened on failure.
+    evidence: source discrepancies vm-origin-proof-missing and quantitative-claims-unbound
+  - beat: root-cause
+    claim: The missing artifact is a correlated evidence chain across the guest, Service, adapter, model, validation, and human decision boundary.
+    evidence: reviewed blueprint flows and evidence contract
+  - beat: system-reveal
+    claim: The independent pattern has one VM client, one Service, one adapter, one managed model boundary, and one evidence endpoint.
+    evidence: reviewed future-state architecture; label as proposed until implemented
+  - beat: live-proof
+    claim: A live claim is earned only when the request originates inside the VM and the current response carries model identity, source state, validation, and the same correlation identifier.
+    evidence: future live adapter; otherwise show visibly labeled REHEARSAL or OFFLINE fixture
+  - beat: trial
+    claim: With the model endpoint unavailable, the adapter returns a typed failure and no synthetic success.
+    evidence: future unavailable-model condition
+  - beat: transformation
+    claim: The team can now separate platform connectivity, AI participation, validation, and human authority—and can see exactly what 201 must add.
+    evidence: current-session payoff and 201 promotion gate
+
+evidence:
+  - id: source-capability-evidence
+    claim: The sources separately demonstrate KubeVirt VMs, Service-based VM networking, and managed AI request patterns.
+    classification: verified-fact
+    source: Pinned repositories listed in demo-blueprint.yaml
+    owner: Lab factory discovery reviewer
+    last_verified: "2026-09-28"
+    treatment: Use as design input only; do not imply an integrated source implementation.
+  - id: source-level-review
+    claim: Existing learner work earns 101, not 201 or 501.
+    classification: interpretation
+    source: Triforce content-501 tasks compared with docs/lab-factory-roadmap.md level outcomes
+    owner: Lab factory discovery reviewer
+    last_verified: "2026-09-28"
+    treatment: State explicitly in presenter notes and the handoff.
+  - id: vm-request-receipt
+    claim: The live request originated inside the demonstrated VM.
+    classification: future-state
+    source: Planned checked-in VM client and guest log
+    owner: Candidate implementation team
+    last_verified: null
+    treatment: Do not claim live until the receipt is returned in the current session.
+  - id: model-invocation-receipt
+    claim: A named model produced the advisory output for the current request.
+    classification: future-state
+    source: Planned typed AI adapter response
+    owner: Candidate implementation team
+    last_verified: null
+    treatment: Show source state and model identity; no model identity means no AI proof.
+  - id: rehearsal-fixture
+    claim: The presentation mechanics can display a representative healthy and unavailable response.
+    classification: rehearsal-fixture
+    source: Future checked-in fixture derived from the versioned response schema
+    owner: Presentation maintainer
+    last_verified: null
+    treatment: Keep visibly labeled REHEARSAL or OFFLINE and exclude from the payoff as live evidence.
+
+live_systems:
+  - name: Independent VM-to-AI evidence adapter
+    endpoint: unresolved
+    adapter: future typed adapter
+    timeout: bounded and specified during implementation
+    fallback: checked-in schema-valid fixture labeled REHEARSAL or OFFLINE
+    source_state: LIVE only when the current request returns model identity, correlation ID, and validation state
+
+journey:
+  presentation: 5–7 minute decision story, at most seven scenes, ending with Close presentation
+  live_demonstration: 5–10 minute healthy-versus-unavailable comparison using the same persistent architecture
+  guided_demo: 20–35 minute instructor trace of VM/VMI, Service, adapter, model, evidence, and authority boundaries
+  hands_on_lab: 60–75 minute 101 lab in which learners verify, trace, invoke, inspect, exercise safe failure, and export an evidence map
+
+open_questions:
+  - Which supported OpenShift and OpenShift Virtualization releases and CPU architecture will be the activation target?
+  - Which immutable guest image and access method will support a repeatable VM-origin request without exposing a password in source?
+  - Which managed model endpoint and model identity are approved for the lab, and how will per-seat credentials be provisioned?
+  - Will the unavailable condition use an instructor-controlled endpoint switch, a fault proxy, or a bounded NetworkPolicy exercise?
+  - What per-seat CPU, memory, pod, storage, request, token, readiness, and cleanup measurements are acceptable after one complete development run?
+  - Who owns the source repositories, the independent candidate, and the final learner evidence rubric?

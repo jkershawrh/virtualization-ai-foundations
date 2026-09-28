@@ -1,0 +1,19 @@
+schema_version: demo-story.redhat-intel.com/benchmark-rubric/v1
+policy: No quantitative performance benchmark is claimed by this 101 candidate.
+scored_dimensions:
+  - id: trace-completeness
+    pass: Learner maps VM, VMI, Service, adapter, model, validation, evidence, and human authority.
+  - id: provenance
+    pass: Learner distinguishes VM-origin evidence from presenter or test-harness evidence.
+  - id: source-state
+    pass: Learner refuses a live inference claim for REHEARSAL or OFFLINE output.
+  - id: failure-reasoning
+    pass: Learner explains why unavailable model output contains no model result and no action authority.
+  - id: claim-discipline
+    pass: Learner makes no performance, cost, capacity, quality, migration, scale, or certification claim.
+future_quantitative_work:
+  owner: independent qualification exercise
+  requirements:
+    - Pre-register workload, model, hardware, sample size, warm-up, and measurement method.
+    - Record raw current-session observations and uncertainty.
+    - Separate laboratory observations from production or fleet claims.

@@ -1,0 +1,21 @@
+= Conclusion
+:navtitle: Conclusion
+
+You traced an established VM-hosted workload through OpenShift Service and
+network boundaries to governed Intel Xeon CPU inference. You verified model
+participation, deterministic validation, safe failure, and human authority.
+
+The takeaway is deliberately narrow:
+
+> Coexistence becomes a trustworthy integration pattern only when every
+> boundary produces attributable evidence.
+
+== What comes next
+
+The future Virtualization + AI 201 lab does not repeat this tour. It asks the
+learner to author the request and response contract, configure the VM client,
+Service, Secret reference, and NetworkPolicy, prove allowed and denied paths,
+and remove the complete workload without residue.
+
+This candidate is not certified, orderable, or promotion-eligible until the
+factory and Launchpad gates are completed independently.

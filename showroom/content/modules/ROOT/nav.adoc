@@ -1,0 +1,8 @@
+* xref:index.adoc[Virtualization + AI 101]
+* xref:01-verify.adoc[1. Verify the runtime]
+* xref:02-trace.adoc[2. Trace the boundaries]
+* xref:03-invoke.adoc[3. Invoke from the VM]
+* xref:04-inspect.adoc[4. Inspect AI evidence]
+* xref:05-failure.adoc[5. Exercise safe failure]
+* xref:06-evidence.adoc[6. Export the evidence map]
+* xref:99-conclusion.adoc[Conclusion]

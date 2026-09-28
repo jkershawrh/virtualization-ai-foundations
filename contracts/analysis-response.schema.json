@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/virtualization-ai/contracts/analysis-response-v1.schema.json",
+  "title": "analysis-response/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "source_state", "condition", "ai_participated", "model", "result", "validation", "authority", "evidence"],
+  "properties": {
+    "schema_version": { "const": "analysis-response/v1" },
+    "request_id": { "type": "string", "format": "uuid" },
+    "source_state": { "enum": ["LIVE", "REHEARSAL", "OFFLINE"] },
+    "condition": { "enum": ["healthy", "model-unavailable"] },
+    "ai_participated": { "type": "boolean" },
+    "model": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["id", "provider", "hardware"],
+          "properties": {
+            "id": { "type": "string", "minLength": 1 },
+            "provider": { "type": "string", "minLength": 1 },
+            "hardware": { "const": "Intel Xeon CPU" }
+          }
+        }
+      ]
+    },
+    "result": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["category", "summary", "rationale"],
+          "properties": {
+            "category": { "enum": ["inspect", "schedule-maintenance", "escalate"] },
+            "summary": { "type": "string", "minLength": 1, "maxLength": 400 },
+            "rationale": { "type": "string", "minLength": 1, "maxLength": 600 }
+          }
+        }
+      ]
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema_valid", "category_valid"],
+      "properties": {
+        "schema_valid": { "type": "boolean" },
+        "category_valid": { "type": "boolean" }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "final_decision_owner", "actions_permitted"],
+      "properties": {
+        "model": { "const": "advisory-only" },
+        "final_decision_owner": { "const": "human operator" },
+        "actions_permitted": { "type": "array", "maxItems": 0 }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "producer", "observed_at"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "producer": { "type": "string", "minLength": 1 },
+          "observed_at": { "type": "string", "format": "date-time" }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "ai_participated": { "const": true } }, "required": ["ai_participated"] },
+      "then": {
+        "properties": {
+          "condition": { "const": "healthy" },
+          "model": { "type": "object" },
+          "result": { "type": "object" },
+          "validation": {
+            "properties": {
+              "schema_valid": { "const": true },
+              "category_valid": { "const": true }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "condition": { "const": "model-unavailable" },
+          "model": { "type": "null" },
+          "result": { "type": "null" }
+        }
+      }
+    }
+  ]
+}

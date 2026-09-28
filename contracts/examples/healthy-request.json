@@ -1,0 +1,13 @@
+{
+  "schema_version": "analysis-request/v1",
+  "request_id": "11111111-1111-4111-8111-111111111111",
+  "origin": {
+    "kind": "virtual-machine",
+    "namespace": "virtualization-ai-101",
+    "vm_name": "operations-vm",
+    "guest_hostname": "operations-vm"
+  },
+  "note": "Operator note: intermittent vibration appears after restart and clears when load is reduced; inspect before the next production window.",
+  "allowed_categories": ["inspect", "schedule-maintenance", "escalate"],
+  "condition": "healthy"
+}

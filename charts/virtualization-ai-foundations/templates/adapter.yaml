@@ -1,0 +1,99 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-analysis-adapter
+  labels:
+    {{- include "virtualization-ai.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ai-adapter
+spec:
+  replicas: {{ .Values.adapter.replicas }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: {{ .Release.Name }}
+      app.kubernetes.io/component: ai-adapter
+  template:
+    metadata:
+      labels:
+        {{- include "virtualization-ai.labels" . | nindent 8 }}
+        app.kubernetes.io/component: ai-adapter
+    spec:
+      serviceAccountName: ai-analysis-adapter
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: adapter
+          image: {{ include "virtualization-ai.image" (list .Values.adapter.image) | quote }}
+          imagePullPolicy: {{ .Values.adapter.image.pullPolicy }}
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: ADAPTER_MODE
+              value: {{ .Values.adapter.mode | quote }}
+            - name: MODEL_API_BASE
+              value: {{ .Values.adapter.model.apiBase | quote }}
+            - name: MODEL_NAME
+              value: {{ .Values.adapter.model.name | quote }}
+            - name: MODEL_PROVIDER
+              value: {{ .Values.adapter.model.provider | quote }}
+            - name: MODEL_HARDWARE
+              value: {{ .Values.adapter.model.hardware | quote }}
+            - name: MODEL_TIMEOUT_SECONDS
+              value: {{ .Values.adapter.model.timeoutSeconds | quote }}
+            - name: SERVICE_DNS
+              value: ai-analysis.{{ .Release.Namespace }}.svc
+            - name: SERVICE_PORT
+              value: "8080"
+            {{- if .Values.adapter.model.apiKeySecret.name }}
+            - name: MODEL_API_KEY_FILE
+              value: /var/run/secrets/model/{{ .Values.adapter.model.apiKeySecret.key }}
+            {{- end }}
+          {{- if .Values.adapter.model.apiKeySecret.name }}
+          volumeMounts:
+            - name: model-credential
+              mountPath: /var/run/secrets/model
+              readOnly: true
+          {{- end }}
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          resources:
+            {{- toYaml .Values.adapter.resources | nindent 12 }}
+      {{- if .Values.adapter.model.apiKeySecret.name }}
+      volumes:
+        - name: model-credential
+          secret:
+            secretName: {{ .Values.adapter.model.apiKeySecret.name }}
+            defaultMode: 0400
+      {{- end }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-analysis
+  labels:
+    {{- include "virtualization-ai.labels" . | nindent 4 }}
+    app.kubernetes.io/component: ai-adapter
+spec:
+  selector:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/component: ai-adapter
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http

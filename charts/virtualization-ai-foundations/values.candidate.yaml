@@ -1,0 +1,21 @@
+# Reproducible local candidate. Load the matching OCI archives before use, or
+# mirror these images into an approved registry and change only repository.
+adapter:
+  image:
+    repository: localhost/virtualization-ai-adapter
+    tag: 0.1.0
+    digest: sha256:c9bfdfcc1afd2cfdf535603c070d8a0d9413c323c779c7f822a3b7e8584e75f5
+    pullPolicy: IfNotPresent
+
+presentation:
+  image:
+    repository: localhost/virtualization-ai-presentation
+    tag: 0.1.0
+    digest: sha256:f5ce3c23299cd42fe86d6b4b5dcc9e197f4cccdfd53ebda6dd494962bbd3d9bb
+    pullPolicy: IfNotPresent
+
+vm:
+  containerDisk:
+    repository: quay.io/containerdisks/fedora
+    tag: "41"
+    digest: sha256:ae48475e213bd3d34415e8f123f5a79166b1eb142fdf851654e3adb9d02fb73f

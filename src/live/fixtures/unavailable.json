@@ -1,0 +1,10 @@
+{
+  "request_id": "22222222-2222-4222-8222-222222222222",
+  "source_state": "REHEARSAL",
+  "ai_participated": "no",
+  "model_id": "none",
+  "hardware": "not invoked",
+  "category": "none",
+  "outcome": "Failed closed at model boundary",
+  "authority": "human operator"
+}

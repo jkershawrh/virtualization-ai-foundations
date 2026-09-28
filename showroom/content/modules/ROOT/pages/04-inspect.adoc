@@ -1,0 +1,47 @@
+= Inspect AI evidence
+:navtitle: 4. Inspect
+
+== Retrieve the redacted evidence record
+
+[source,bash,role="execute",subs=attributes+]
+----
+REQUEST_ID=$(cat /tmp/virtualization-ai-request-id)
+oc exec -n {namespace} deploy/virtualization-ai-presentation -- \
+  wget -qO- "http://{adapter_service}:8080/api/v1/evidence/$REQUEST_ID" | \
+  tee /tmp/virtualization-ai-evidence.json | jq .
+----
+
+== Trace the same request
+
+[source,bash,role="execute"]
+----
+jq '{
+  request_id,
+  request_sha256,
+  origin,
+  service,
+  adapter,
+  model: .response.model,
+  source_state: .response.source_state,
+  ai_participated: .response.ai_participated,
+  validation: .response.validation,
+  authority: .response.authority
+}' /tmp/virtualization-ai-evidence.json
+----
+
+The evidence record stores a request hash rather than the raw note. Confirm:
+
+* `origin.kind` is `virtual-machine`;
+* the VM and guest hostname match the runtime you inspected;
+* the Service DNS is namespace-local;
+* the adapter mode is `live` for a live claim;
+* model hardware is `Intel Xeon CPU`;
+* the output passed deterministic schema and category checks;
+* `actions_permitted` is empty and the final decision owner is the human operator.
+
+The model's explanation does not prove that its recommendation is correct. It
+proves only that the named model participated and returned a schema-valid,
+advisory result for this bounded input.
+
+[.next-nav]
+xref:05-failure.adoc[Next: exercise safe failure →]

@@ -1,0 +1,48 @@
+= Invoke from inside the VM
+:navtitle: 3. Invoke
+
+== Create a correlation identifier
+
+[source,bash,role="execute"]
+----
+REQUEST_ID=$(uuidgen | tr '[:upper:]' '[:lower:]')
+printf '%s' "$REQUEST_ID" | tee /tmp/virtualization-ai-request-id
+----
+
+The same `request_id` must appear in the guest receipt, adapter response, and
+evidence record.
+
+== Read the synthetic input
+
+[source,bash,role="execute",subs=attributes+]
+----
+virtctl ssh --identity-file={ssh_key_path} -n {namespace} lab@{vm_name} -- \
+  cat /opt/virtualization-ai/operations-note.txt
+----
+
+The input is synthetic and bounded. No customer, production, or credential data
+belongs in this exercise.
+
+== Run the healthy condition
+
+[source,bash,role="execute",subs=attributes+]
+----
+REQUEST_ID=$(cat /tmp/virtualization-ai-request-id)
+virtctl ssh --identity-file={ssh_key_path} -n {namespace} lab@{vm_name} -- \
+  sudo /usr/local/bin/virtualization-ai-client healthy "$REQUEST_ID" | \
+  tee /tmp/virtualization-ai-healthy.json
+----
+
+Inspect the response:
+
+[source,bash,role="execute"]
+----
+jq '{request_id, source_state, condition, ai_participated, model, validation, authority}' \
+  /tmp/virtualization-ai-healthy.json
+----
+
+Do not continue with a live claim unless `source_state` is `LIVE`,
+`ai_participated` is `true`, and model identity is present.
+
+[.next-nav]
+xref:04-inspect.adoc[Next: inspect the AI evidence →]

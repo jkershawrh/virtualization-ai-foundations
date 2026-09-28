@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/virtualization-ai/contracts/analysis-request-v1.schema.json",
+  "title": "analysis-request/v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "request_id", "origin", "note", "allowed_categories", "condition"],
+  "properties": {
+    "schema_version": { "const": "analysis-request/v1" },
+    "request_id": { "type": "string", "format": "uuid" },
+    "origin": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "namespace", "vm_name", "guest_hostname"],
+      "properties": {
+        "kind": { "const": "virtual-machine" },
+        "namespace": { "type": "string", "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$" },
+        "vm_name": { "type": "string", "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?$" },
+        "guest_hostname": { "type": "string", "minLength": 1, "maxLength": 253 }
+      }
+    },
+    "note": { "type": "string", "minLength": 20, "maxLength": 2000 },
+    "allowed_categories": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 6,
+      "uniqueItems": true,
+      "items": { "enum": ["inspect", "schedule-maintenance", "escalate"] }
+    },
+    "condition": { "enum": ["healthy", "model-unavailable"] }
+  }
+}

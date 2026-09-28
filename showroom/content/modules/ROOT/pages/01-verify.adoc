@@ -1,0 +1,37 @@
+= Verify the runtime
+:navtitle: 1. Verify
+
+== Check OpenShift Virtualization
+
+[source,bash,role="execute",subs=attributes+]
+----
+oc get hyperconverged kubevirt-hyperconverged -n openshift-cnv \
+  -o jsonpath='{.status.conditions[?(@.type=="Available")].status}{"\n"}'
+----
+
+Continue only when the result is `True`.
+
+== Identify the VM and VMI
+
+[source,bash,role="execute",subs=attributes+]
+----
+oc get vm,vmi -n {namespace} -l app.kubernetes.io/part-of=virtualization-ai-101 -o wide
+----
+
+Record the VirtualMachine name, VirtualMachineInstance phase, node, and guest IP.
+The VM and VMI are related but different runtime objects; the running VMI is the
+current guest execution.
+
+== Check the adapter source state
+
+[source,bash,role="execute",subs=attributes+]
+----
+oc exec -n {namespace} deploy/virtualization-ai-presentation -- \
+  wget -qO- http://{adapter_service}:8080/healthz | jq .
+----
+
+`mode: live` is required for a live AI claim. `rehearsal` or `offline` remains
+useful for practicing the journey but cannot satisfy the proof gate.
+
+[.next-nav]
+xref:02-trace.adoc[Next: trace the boundaries →]

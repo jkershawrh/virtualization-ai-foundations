@@ -1,0 +1,39 @@
+= Trace the boundaries
+:navtitle: 2. Trace
+
+== Service boundary
+
+[source,bash,role="execute",subs=attributes+]
+----
+oc get service {adapter_service} -n {namespace} -o yaml | \
+  yq '{selector: .spec.selector, ports: .spec.ports}'
+
+oc get endpointslice -n {namespace} \
+  -l kubernetes.io/service-name={adapter_service} \
+  -o json | jq '.items[] | {addresses: [.endpoints[].addresses[]], ports: .ports}'
+----
+
+The VM targets stable Service DNS. The EndpointSlice shows which adapter pod is
+selected in this session.
+
+== Network boundary
+
+[source,bash,role="execute",subs=attributes+]
+----
+oc get networkpolicy -n {namespace}
+oc get networkpolicy operations-vm-egress ai-adapter-ingress -n {namespace} -o yaml
+----
+
+Locate the two explicit permissions:
+
+* the `virt-launcher` pod for `{vm_name}` may reach the adapter on TCP 8080;
+* the adapter may use DNS and egress on TCP 443 to the configured inference endpoint.
+
+== Authority boundary
+
+The model receives a synthetic note and an allowed category list. It cannot
+call tools, modify the VM, change OpenShift, or approve an operational action.
+The final decision owner is the *human operator*.
+
+[.next-nav]
+xref:03-invoke.adoc[Next: invoke from the VM →]

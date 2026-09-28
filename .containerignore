@@ -1,0 +1,9 @@
+.git
+artifacts
+dist
+node_modules
+playwright-report
+test-results
+visual-tests
+__pycache__
+*.pyc

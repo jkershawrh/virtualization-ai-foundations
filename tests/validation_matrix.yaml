@@ -1,0 +1,35 @@
+schema_version: demo-story.redhat-intel.com/validation-matrix/v1
+checks:
+  - id: contract-healthy
+    layer: contract
+    command: python3 -m unittest tests.test_contracts
+    pass: Healthy request and response examples satisfy versioned schemas.
+  - id: contract-unavailable
+    layer: contract
+    command: python3 -m unittest tests.test_contracts
+    pass: Unavailable response cannot claim model participation or return advisory output.
+  - id: adapter-boundaries
+    layer: component
+    command: python3 -m unittest tests.test_workload
+    pass: Health, validation, redaction, rehearsal labeling, and fail-closed behavior pass.
+  - id: deployment-render
+    layer: packaging
+    command: npm run lint:helm
+    pass: Chart lints and renders VM, Service, adapter, presentation, and NetworkPolicy resources.
+  - id: presentation-behavior
+    layer: presentation
+    command: npm test
+    pass: Seven-scene arc, progressive architecture, source-state labels, and accumulating proof pass.
+  - id: presentation-stage-fit
+    layer: presentation
+    command: npm run test:visual
+    pass: Baselines pass and every scene has zero accidental scrolling at 1920x1080 and 1440x900.
+  - id: image-scan
+    layer: artifact
+    command: Trivy 0.74.0 against Docker-archive exports
+    pass: Zero detected vulnerabilities in each final runtime image.
+  - id: cluster-live-journey
+    layer: integrated
+    command: Run Showroom modules 1 through 6 on an approved cluster and endpoint.
+    pass: Same request ID joins guest, Service, named model, validation, unavailable condition, and learner evidence map.
+    status: launchpad-independent-gate
