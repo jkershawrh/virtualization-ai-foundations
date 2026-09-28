@@ -9,6 +9,11 @@ SHOWROOM = ROOT / "showroom"
 
 
 class ShowroomTests(unittest.TestCase):
+    def test_showroom_has_independent_playbook(self):
+        playbook = ROOT / "showroom/default-site.yml"
+        self.assertTrue(playbook.exists())
+        self.assertIn("start_page: virtualization-ai-101::index.adoc", playbook.read_text())
+
     def test_showroom_is_separate_and_complete(self):
         antora = yaml.safe_load((SHOWROOM / "content/antora.yml").read_text())
         self.assertEqual(antora["name"], "virtualization-ai-101")

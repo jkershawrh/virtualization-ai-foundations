@@ -1,4 +1,8 @@
 FROM docker.io/library/python@sha256:f3ebba2ace255c93267a0278da88c7f1044432991abc4e6ad20d22e34dd0f8ee
+ARG SOURCE_REVISION=unknown
+LABEL org.opencontainers.image.source="https://github.com/jkershawrh/virtualization-ai-foundations" \
+      org.opencontainers.image.revision="$SOURCE_REVISION" \
+      org.opencontainers.image.title="Virtualization + AI 101 adapter"
 
 WORKDIR /opt/app-root/src
 RUN python -m pip uninstall --yes msgpack setuptools pip

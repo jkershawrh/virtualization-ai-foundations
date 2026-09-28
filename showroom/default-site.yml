@@ -1,0 +1,13 @@
+site:
+  title: Virtualization + AI 101
+  start_page: virtualization-ai-101::index.adoc
+content:
+  sources:
+    - url: ./content
+      branches: HEAD
+ui:
+  bundle:
+    url: https://github.com/rhpds/showroom_theme_rhdp/releases/latest/download/ui-bundle.zip
+    snapshot: true
+output:
+  dir: ./www
