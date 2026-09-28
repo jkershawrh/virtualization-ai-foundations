@@ -21,6 +21,8 @@ the 2026 virtualization roadshow, Triforce Virt, or `ai-virtual-agent`.
 - explicit human-only action authority; and
 - factory tests, visual baselines, image receipts, and a draft Launchpad
   handoff proposal.
+- a source-revision-bound GitHub Actions workflow for strict scanning, GHCR
+  publication, keyless signing, SBOM/provenance attestations, and verification.
 
 The default deployment is `rehearsal` and contains no secret. A live deployment
 must provide an approved OpenAI-compatible model endpoint, model identity,
@@ -100,3 +102,8 @@ migration-success, or certification claim.
 and evidence boundary. The draft handoff keeps every authority flag false:
 Launchpad must independently approve the source, render, artifacts, runtime,
 capacity, reclaim behavior, certification, and promotion.
+
+The immutable release workflow is documented in
+`docs/immutable-release.md`. Local candidate digests and published GHCR digests
+are recorded separately so a local build cannot be mistaken for publication
+evidence.
