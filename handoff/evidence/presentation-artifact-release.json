@@ -1,0 +1,31 @@
+{
+  "schema_version": "demo-story.redhat-intel.com/artifact-release/v1",
+  "component": "presentation",
+  "source_repository": "https://github.com/jkershawrh/virtualization-ai-foundations",
+  "source_revision": "68e3980d0a1df4ff20d36e6e76f8518781345239",
+  "image": "localhost/virtualization-ai-presentation@sha256:85bd11634e59e565ab882d21fc70274fa133712ca5afbc5ea2c29e20f82b2df5",
+  "architecture": "linux/amd64",
+  "build_base_image": "registry.access.redhat.com/ubi9/nodejs-22@sha256:90d19cd1a4ba03bcb63c46320862955fc1560511532ee35ff472289bf5fe2276",
+  "runtime_base_image": "docker.io/nginxinc/nginx-unprivileged@sha256:c18d735d33a1c3ccb5ef201d504e5b4aa4d003e81f034b329011267f4c4d0f58",
+  "oci_archive": {
+    "path": "artifacts/virtualization-ai-presentation-0.1.0-linux-amd64.oci.tar",
+    "sha256": "bb37d872266d093d6ba3a0e4713ec62aeefd1c1b75ca7491facdf6a12be9434d",
+    "size_mib_rounded": 24,
+    "tracked": false
+  },
+  "scan": {
+    "scanner": "Trivy 0.74.0",
+    "report_sha256": "39dfa3c40a3f392826e1d41c2e2375a71b1276eb672b73191ceb81dd5fe7c998",
+    "detected_vulnerabilities": 0
+  },
+  "sbom": {
+    "format": "CycloneDX JSON",
+    "path": "artifacts/presentation-sbom.cdx.json",
+    "sha256": "2d3f09a354847e7ea7518011b226d2affe2d3b138f7a7f5f2ba1b99895990cfd",
+    "tracked": false
+  },
+  "smoke_test": "PASS for static UI and /api/v1/analyze reverse proxy",
+  "registry_publication": "not performed",
+  "signature": "not created",
+  "created_at": "2026-09-28T19:22:32Z"
+}

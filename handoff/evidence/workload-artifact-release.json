@@ -1,0 +1,30 @@
+{
+  "schema_version": "demo-story.redhat-intel.com/artifact-release/v1",
+  "component": "adapter",
+  "source_repository": "https://github.com/jkershawrh/virtualization-ai-foundations",
+  "source_revision": "68e3980d0a1df4ff20d36e6e76f8518781345239",
+  "image": "localhost/virtualization-ai-adapter@sha256:b55c096b006610e0c910ef133cbf0992bf24140ab872f233588a8420855e18ec",
+  "architecture": "linux/amd64",
+  "base_image": "docker.io/library/python@sha256:f3ebba2ace255c93267a0278da88c7f1044432991abc4e6ad20d22e34dd0f8ee",
+  "oci_archive": {
+    "path": "artifacts/virtualization-ai-adapter-0.1.0-linux-amd64.oci.tar",
+    "sha256": "5f6b9b044a17cffcbf3d43a8cb75fa0f7fa17ea49e25594b9f4c2af793f57b5f",
+    "size_mib_rounded": 19,
+    "tracked": false
+  },
+  "scan": {
+    "scanner": "Trivy 0.74.0",
+    "report_sha256": "722914074d0572c185fed8a5bd134be4c6c26c80ca16304b1c92131f89cca952",
+    "detected_vulnerabilities": 0
+  },
+  "sbom": {
+    "format": "CycloneDX JSON",
+    "path": "artifacts/adapter-sbom.cdx.json",
+    "sha256": "313925383925e5e2a10c4ad587a104b8a8b210bda1d652cc6ed627ceb31b3591",
+    "tracked": false
+  },
+  "smoke_test": "PASS through presentation reverse proxy in rehearsal mode",
+  "registry_publication": "not performed",
+  "signature": "not created",
+  "created_at": "2026-09-28T19:22:32Z"
+}

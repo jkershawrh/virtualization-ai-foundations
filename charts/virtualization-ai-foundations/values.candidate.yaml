@@ -4,14 +4,14 @@ adapter:
   image:
     repository: localhost/virtualization-ai-adapter
     tag: 0.1.0
-    digest: sha256:c9bfdfcc1afd2cfdf535603c070d8a0d9413c323c779c7f822a3b7e8584e75f5
+    digest: sha256:b55c096b006610e0c910ef133cbf0992bf24140ab872f233588a8420855e18ec
     pullPolicy: IfNotPresent
 
 presentation:
   image:
     repository: localhost/virtualization-ai-presentation
     tag: 0.1.0
-    digest: sha256:f5ce3c23299cd42fe86d6b4b5dcc9e197f4cccdfd53ebda6dd494962bbd3d9bb
+    digest: sha256:85bd11634e59e565ab882d21fc70274fa133712ca5afbc5ea2c29e20f82b2df5
     pullPolicy: IfNotPresent
 
 vm:

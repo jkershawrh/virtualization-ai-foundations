@@ -29,7 +29,8 @@ class PackagingTests(unittest.TestCase):
         self.assertNotIn("password", str(values).lower())
 
     def test_release_images_require_digests(self):
-        values = yaml.safe_load((CHART / "values.candidate.yaml").read_text())
+        candidate = CHART / "values.candidate.yaml"
+        values = yaml.safe_load(candidate.read_text())
         for image in (
             values["adapter"]["image"],
             values["presentation"]["image"],
@@ -37,6 +38,14 @@ class PackagingTests(unittest.TestCase):
         ):
             self.assertRegex(image["digest"], r"^sha256:[0-9a-f]{64}$")
             self.assertTrue(image["repository"])
+        render = subprocess.run(
+            ["helm", "template", "virtualization-ai", str(CHART), "-f", str(candidate)],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(render.returncode, 0, render.stderr)
+        self.assertIn(values["adapter"]["image"]["digest"], render.stdout)
+        self.assertIn(values["presentation"]["image"]["digest"], render.stdout)
 
 
 if __name__ == "__main__":

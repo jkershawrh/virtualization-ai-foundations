@@ -1,0 +1,118 @@
+schema_version: demo-story.redhat-intel.com/launchpad-handoff/v1
+factory_receipt:
+  identity:
+    catalog_item_id: virtualization-ai-foundations-101
+    display_name: "Virtualization + AI 101: Trace a VM to Governed AI"
+    proposed_track: virtualization_ai
+    proposed_learning_level: "101"
+  authority:
+    orderable: false
+    certified: false
+    promotion_eligible: false
+    may_modify_launchpad_catalog: false
+    may_provision: false
+    may_publish: false
+  presentation_source:
+    repository: https://github.com/jkershawrh/virtualization-ai-foundations
+    revision: "68e3980d0a1df4ff20d36e6e76f8518781345239"
+    tree_dirty: false
+  artifacts:
+    workload:
+      image: localhost/virtualization-ai-adapter@sha256:b55c096b006610e0c910ef133cbf0992bf24140ab872f233588a8420855e18ec
+      architecture: linux/amd64
+      source_repository: https://github.com/jkershawrh/virtualization-ai-foundations
+      source_revision: "68e3980d0a1df4ff20d36e6e76f8518781345239"
+      release_receipt: {path: evidence/workload-artifact-release.json, sha256: "ba13bd2b2abd0c5bc0342ddc8ac9fe131485beeb06aa6c59f9f851488a71bde3"}
+    presentation:
+      image: localhost/virtualization-ai-presentation@sha256:85bd11634e59e565ab882d21fc70274fa133712ca5afbc5ea2c29e20f82b2df5
+      architecture: linux/amd64
+      source_repository: https://github.com/jkershawrh/virtualization-ai-foundations
+      source_revision: "68e3980d0a1df4ff20d36e6e76f8518781345239"
+      release_receipt: {path: evidence/presentation-artifact-release.json, sha256: "f97f254218a464ab266f6ef96d6b4f786e1aff7a9e58d8e715df6819d85a9952"}
+    showroom_content:
+      repository: https://github.com/jkershawrh/virtualization-ai-foundations
+      revision: "68e3980d0a1df4ff20d36e6e76f8518781345239"
+      bundle_digest: "sha256:fbef34953b08a0980b66fba8ecd25f7eec6c8d992349f034d6c7c474abdf1880"
+  factory_evidence:
+    development_journey: {path: evidence/factory-development-journey.json, sha256: "cd2840f3d0ee5f4d3b97dafeccf51bd8c733df76ec4e532fbc26bd4bcec473a0"}
+    presentation_verification: {path: evidence/presentation-verification.json, sha256: "437c5662121a5d059843143f676cafa22d5aad053af4e1fe067a660fe2c8d880"}
+    zero_residue: {path: evidence/factory-zero-residue.json, sha256: "49931c01dad28739c3b8e6901d61f5646b720614ffa57a428de7c5ec7a9457f5"}
+  contracts:
+    demo_blueprint: demo-blueprint.yaml
+    story_brief: story.brief.yaml
+    validation_matrix: tests/validation_matrix.yaml
+    claim_registry: tests/claim_registry.yaml
+    benchmark_rubric: tests/benchmark_rubric.yaml
+  known_blockers:
+    - Images exist as local digest-pinned OCI candidates but are not mirrored to an approved registry, signed, or verified by exact-digest pull.
+    - No approved OpenShift cluster and managed Intel Xeon CPU model endpoint were available for the live VM-origin journey.
+    - Declared chart resources have not been measured at one, five, or twenty-five seats.
+    - OpenShift reclaim and zero-residue evidence remain independent Launchpad gates; the factory receipt covers only the local container smoke environment.
+    - Launchpad source approval, trusted render, artifact review, live seat certification, and promotion remain required.
+proposed_launchpad_intake:
+  api_version: launchpad.redhat.com/v1alpha1
+  catalog:
+    catalog_item_id: virtualization-ai-foundations-101
+    display_name: "Virtualization + AI 101: Trace a VM to Governed AI"
+    description: "Trace one attributable request from an OpenShift Virtualization VM through platform networking to governed Intel Xeon CPU inference and human authority."
+    category: guided_trace
+    version: 0.1.0
+    status: draft
+  learning:
+    learning_level: "101"
+    learning_stage: Explore
+    experience_type: guided_trace
+    prerequisites: []
+    recommended_next_items: []
+    journey_role: foundation
+    specialty_family: virtualization_ai
+    branches_from: null
+    returns_to: null
+    shared_blueprint: red-hat-intel-virtualization-ai-v1
+    solution_family: virtualization_ai
+  sources:
+    showroom: {repo_url: https://github.com/jkershawrh/virtualization-ai-foundations, revision: "68e3980d0a1df4ff20d36e6e76f8518781345239", playbook: showroom/default-site.yml, start_path: showroom/content}
+    workload: {repo_url: https://github.com/jkershawrh/virtualization-ai-foundations, revision: "68e3980d0a1df4ff20d36e6e76f8518781345239", deploy_path: charts/virtualization-ai-foundations}
+  runtime:
+    deployment_type: helm
+    deployment_class: shared_namespace
+    deployment_scope: participant_namespace
+    supported_architectures: [linux/amd64]
+    supported_openshift_versions: [review-required]
+    required_operators: [OpenShift Virtualization]
+    required_capabilities: [openshift, showroom, openshift-virtualization, model-endpoint]
+    required_models: [approved-openai-compatible-xeon-cpu-model]
+    exposure_policy: internal
+    ingress: participant-route
+    egress: model-endpoint-only
+    cluster_scoped_resources: false
+    cleanup_owner: launchpad-workshop-reclaim
+    workload:
+      helm_values:
+        workload_image: localhost/virtualization-ai-adapter@sha256:b55c096b006610e0c910ef133cbf0992bf24140ab872f233588a8420855e18ec
+        presentation_image: localhost/virtualization-ai-presentation@sha256:85bd11634e59e565ab882d21fc70274fa133712ca5afbc5ea2c29e20f82b2df5
+        presentation_enabled: true
+      runtime_secret_name: virtualization-ai-model-runtime
+      runtime_secret_value_path: adapter.model.apiKeySecret.name
+      runtime_secret_sources: {endpoint: model_endpoint, name: requested_model, api-key: model_api_key}
+    resources:
+      steady_per_seat: {cpu_millicores: 1125, memory_mib: 1184, pods: 3, storage_gib: 0}
+      peak_per_seat: {cpu_millicores: 1700, memory_mib: 1408, pods: 3}
+      workshop_shared: {cpu_millicores: 0, memory_mib: 0, pods: 0, storage_gib: 0}
+      provisioning_concurrency: 1
+      observed_largest_run: 1
+      safety_margin_percent: 20
+    tabs:
+      - {id: story, title: Story, source: workload.route.ui}
+      - {id: guide, title: Lab Guide, source: showroom.guide}
+      - {id: terminal, title: Terminal, source: showroom.terminal}
+      - {id: openshift-console, title: OpenShift Console, source: cluster.console_url}
+    readiness_checks: [vm-running, pod-ready, route-accessible, adapter-health, complete-journey]
+  certification_proposal:
+    stage: factory-development-verified
+    max_workshop_seats: 0
+    promotion_sequence: [1, 5, 25]
+    proof_contract_draft: handoff/catalog-certification.proposed.yaml
+    launchpad_evidence_required: [trusted-render-review, artifact-and-destination-qualification, one-seat-certification, five-seat-certification, twenty-five-seat-certification, reclaim-zero-residue]
+  requested_pipeline_actions: [approve_source, run_discovery]
+  subsequent_independent_gates: [generate_draft, trusted_render_review, artifact_review, run_one_seat_certification, request_review, scale_certification, promote]
