@@ -1,13 +1,12 @@
-FROM docker.io/library/python@sha256:f3ebba2ace255c93267a0278da88c7f1044432991abc4e6ad20d22e34dd0f8ee
+FROM cgr.dev/chainguard/python@sha256:b4f5a35502dfb90e79cd23a9f5b39776720c3a8ea29c22b21917791d715a3e1d
 ARG SOURCE_REVISION=unknown
 LABEL org.opencontainers.image.source="https://github.com/jkershawrh/virtualization-ai-foundations" \
       org.opencontainers.image.revision="$SOURCE_REVISION" \
       org.opencontainers.image.title="Virtualization + AI 101 adapter"
 
-WORKDIR /opt/app-root/src
-RUN python -m pip uninstall --yes msgpack setuptools pip
-COPY --chown=1001:0 workload /opt/app-root/src/workload
-COPY --chown=1001:0 contracts/examples /opt/app-root/src/contracts/examples
+WORKDIR /app
+COPY --chown=65532:65532 workload /app/workload
+COPY --chown=65532:65532 contracts/examples /app/contracts/examples
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -15,6 +14,6 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     ADAPTER_PORT=8080 \
     ADAPTER_MODE=rehearsal
 
-USER 1001
+USER 65532:65532
 EXPOSE 8080
-CMD ["python", "-m", "workload.app"]
+CMD ["-m", "workload.app"]

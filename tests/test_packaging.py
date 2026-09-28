@@ -10,6 +10,14 @@ CHART = ROOT / "charts/virtualization-ai-foundations"
 
 
 class PackagingTests(unittest.TestCase):
+    def test_runtime_images_are_digest_pinned_and_minimal(self):
+        presentation = (ROOT / "Containerfile").read_text()
+        adapter = (ROOT / "workload/Containerfile").read_text()
+        self.assertRegex(presentation, r"FROM cgr\.dev/chainguard/nginx@sha256:[0-9a-f]{64}")
+        self.assertRegex(adapter, r"FROM cgr\.dev/chainguard/python@sha256:[0-9a-f]{64}")
+        self.assertNotIn(":latest", presentation)
+        self.assertNotIn(":latest", adapter)
+
     def test_helm_chart_lints_and_renders(self):
         lint = subprocess.run(["helm", "lint", str(CHART)], capture_output=True, text=True)
         self.assertEqual(lint.returncode, 0, lint.stdout + lint.stderr)

@@ -5,7 +5,7 @@ RUN npm ci
 COPY --chown=1001:0 . .
 RUN npm run build
 
-FROM docker.io/nginxinc/nginx-unprivileged@sha256:c18d735d33a1c3ccb5ef201d504e5b4aa4d003e81f034b329011267f4c4d0f58
+FROM cgr.dev/chainguard/nginx@sha256:57e924b3b177cf480ce53cdcad2982b44093494c217d2bc95f2fb5b6a0950a5a
 ARG SOURCE_REVISION=unknown
 LABEL org.opencontainers.image.source="https://github.com/jkershawrh/virtualization-ai-foundations" \
       org.opencontainers.image.revision="$SOURCE_REVISION" \
