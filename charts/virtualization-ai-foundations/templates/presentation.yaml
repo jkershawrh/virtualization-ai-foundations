@@ -68,7 +68,9 @@ spec:
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: virtualization-ai-presentation
+  # Keep the Route name short because OpenShift's generated host prepends it
+  # to the per-seat namespace and limits that DNS label to 63 characters.
+  name: lab
   labels:
     {{- include "virtualization-ai.labels" . | nindent 4 }}
     app.kubernetes.io/component: presentation
