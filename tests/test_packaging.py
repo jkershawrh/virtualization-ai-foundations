@@ -37,6 +37,23 @@ class PackagingTests(unittest.TestCase):
         self.assertEqual(values["adapter"]["model"]["apiKeySecret"]["name"], "")
         self.assertNotIn("password", str(values).lower())
 
+    def test_live_maas_egress_is_namespace_scoped(self):
+        render = subprocess.run(
+            [
+                "helm", "template", "virtualization-ai", str(CHART),
+                "--set", "adapter.model.egressNamespace=launchpad-flightpath-candidate",
+                "--set", "adapter.model.egressPort=4000",
+            ],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(render.returncode, 0, render.stderr)
+        self.assertIn(
+            'kubernetes.io/metadata.name: "launchpad-flightpath-candidate"',
+            render.stdout,
+        )
+        self.assertIn("port: 4000", render.stdout)
+
     def test_local_candidate_images_require_digests(self):
         candidate = CHART / "values.candidate.yaml"
         values = yaml.safe_load(candidate.read_text())

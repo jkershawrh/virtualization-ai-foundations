@@ -33,6 +33,15 @@ spec:
         - { protocol: TCP, port: 53 }
     - ports:
         - { protocol: TCP, port: 443 }
+    {{- if .Values.adapter.model.egressNamespace }}
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ .Values.adapter.model.egressNamespace | quote }}
+      ports:
+        - protocol: TCP
+          port: {{ .Values.adapter.model.egressPort }}
+    {{- end }}
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy

@@ -13,6 +13,8 @@ adapter:
     provider: ""
     hardware: Intel Xeon CPU
     timeoutSeconds: 20
+    egressNamespace: ""
+    egressPort: 4000
     apiKeySecret:
       name: ""
       key: api-key
