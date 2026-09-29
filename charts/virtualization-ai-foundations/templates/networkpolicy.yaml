@@ -45,7 +45,11 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: {{ .Release.Name }}
       app.kubernetes.io/component: presentation
-  policyTypes: [Ingress, Egress]
+  # Keep ingress restricted to the OpenShift router. Do not add an Egress
+  # policy here: nginx resolves the in-namespace AI adapter when it starts,
+  # and an incomplete egress allow-list turns that transient lookup into a
+  # permanent CrashLoopBackOff.
+  policyTypes: [Ingress]
   ingress:
     - from:
         - namespaceSelector:
@@ -53,21 +57,6 @@ spec:
               network.openshift.io/policy-group: ingress
       ports:
         - { protocol: TCP, port: 8080 }
-  egress:
-    - to:
-        - podSelector:
-            matchLabels:
-              app.kubernetes.io/instance: {{ .Release.Name }}
-              app.kubernetes.io/component: ai-adapter
-      ports:
-        - { protocol: TCP, port: 8080 }
-    - to:
-        - namespaceSelector:
-            matchLabels:
-              kubernetes.io/metadata.name: openshift-dns
-      ports:
-        - { protocol: UDP, port: 53 }
-        - { protocol: TCP, port: 53 }
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
