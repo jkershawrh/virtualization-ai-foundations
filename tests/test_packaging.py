@@ -52,6 +52,8 @@ class PackagingTests(unittest.TestCase):
             'kubernetes.io/metadata.name: "launchpad-flightpath-candidate"',
             render.stdout,
         )
+        self.assertIn("podSelector: {}", render.stdout)
+        self.assertIn("port: 5353", render.stdout)
         self.assertIn("port: 4000", render.stdout)
 
     def test_local_candidate_images_require_digests(self):
