@@ -32,7 +32,7 @@ The first strict run correctly stopped before publication after full scans
 found HIGH vulnerabilities in the original runtime bases. Runtime hardening was
 then committed without weakening the gate. Run
 [`36473568680`](https://github.com/jkershawrh/virtualization-ai-foundations/actions/runs/36473568680)
-built exact source revision `7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da`,
+built exact source revision `f222c5c9d4ec84f8d0f27fe9c0aa2033770d3be8`,
 published both hardened images, verified exact-digest pulls, and verified their
 GitHub OIDC signatures plus SPDX and provenance attestations.
 

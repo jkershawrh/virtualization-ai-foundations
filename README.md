@@ -68,7 +68,7 @@ conspicuously labeled rehearsal evidence.
 Development defaults use local tags for the two authored images.
 `values.candidate.yaml` preserves the earlier local-only OCI candidates;
 `values.published.yaml` pins the signed, attested `linux/amd64` GHCR candidates
-built from source revision `7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da`.
+built from source revision `f222c5c9d4ec84f8d0f27fe9c0aa2033770d3be8`.
 
 ```sh
 helm upgrade --install virtualization-ai-101 \

@@ -3,8 +3,8 @@
   "evidence_scope": "published_immutable_candidate",
   "component": "presentation",
   "source_repository": "https://github.com/jkershawrh/virtualization-ai-foundations",
-  "source_revision": "7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da",
-  "image": "ghcr.io/jkershawrh/virtualization-ai-foundations-presentation@sha256:fb4869e465beb513636ad574d9ee1974d82431b226099e6d8933f24263b9d61c",
+  "source_revision": "f222c5c9d4ec84f8d0f27fe9c0aa2033770d3be8",
+  "image": "ghcr.io/jkershawrh/virtualization-ai-foundations-presentation@sha256:a9a287880850d678d2cfebaf9909e4d975181df49fcc3b712ab0e480bc14e8b5",
   "architecture": "linux/amd64",
   "workflow": {
     "run_id": 36473568680,
@@ -17,14 +17,14 @@
     "scope": "complete inventory; gate includes findings without a published fix",
     "severity_counts": {"critical": 0, "high": 0, "medium": 4, "low": 0, "negligible": 0, "unknown": 0},
     "hard_gate": "PASS: zero HIGH or CRITICAL findings",
-    "full_report_artifact": "virtualization-ai-101-presentation-7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da/vulnerability-full-presentation.json",
+    "full_report_artifact": "virtualization-ai-101-presentation-f222c5c9d4ec84f8d0f27fe9c0aa2033770d3be8/vulnerability-full-presentation.json",
     "full_report_sha256": "4c20f8c011cfb30a535f5c7147a7d4a50e0c6be85710966d6f7e7463561e05ea",
     "gate_report_sha256": "434e6e8f37c7a4912b06b7e3519aa7354584ba28be649982163abc3b89375699"
   },
   "sbom": {
     "format": "SPDX JSON",
     "packages": 26,
-    "artifact": "virtualization-ai-101-presentation-7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da/sbom-presentation.spdx.json",
+    "artifact": "virtualization-ai-101-presentation-f222c5c9d4ec84f8d0f27fe9c0aa2033770d3be8/sbom-presentation.spdx.json",
     "sha256": "a94edfcaf2b285d3b2f9c649188cb6d85da91b893d4ac0871947bcffcb29545c"
   },
   "supply_chain": {
@@ -33,7 +33,7 @@
     "oidc_signature_verification": "PASS",
     "spdx_attestation_verification": "PASS",
     "provenance_attestation_verification": "PASS",
-    "verification_artifact": "virtualization-ai-101-published-presentation-7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da",
+    "verification_artifact": "virtualization-ai-101-published-presentation-f222c5c9d4ec84f8d0f27fe9c0aa2033770d3be8",
     "signature_verification_sha256": "837ac9f27b0480e634ad8a7d1af791cd2cd775a47442b0fced31202685e070e3",
     "sbom_attestation_verification_sha256": "c50e051fb3d5cec88abae9795bf6b01857f90b0cf6ad4c17632fe3a9bb575ca6",
     "provenance_attestation_verification_sha256": "d2b378c3f7f9e7901f09172914523c10c618d11621ca475fc983ce97a3b531da"

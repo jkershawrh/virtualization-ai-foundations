@@ -1,13 +1,13 @@
 {
   "schema_version": "demo-story.redhat-intel.com/published-release/v1",
   "evidence_scope": "published_immutable_candidates",
-  "source_revision": "7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da",
+  "source_revision": "f222c5c9d4ec84f8d0f27fe9c0aa2033770d3be8",
   "workflow_run": "https://github.com/jkershawrh/virtualization-ai-foundations/actions/runs/36473568680",
   "workflow_conclusion": "success",
   "platform": "linux/amd64",
   "images": {
-    "adapter": "ghcr.io/jkershawrh/virtualization-ai-foundations-adapter@sha256:429d27ecd1eaaec98be8e8d252925fe8dd6b0f525d0c5f06f65d1a6adba6d9a9",
-    "presentation": "ghcr.io/jkershawrh/virtualization-ai-foundations-presentation@sha256:fb4869e465beb513636ad574d9ee1974d82431b226099e6d8933f24263b9d61c"
+    "adapter": "ghcr.io/jkershawrh/virtualization-ai-foundations-adapter@sha256:3d90ef4b3ef0d3c7c09f5126f967070ca4c1496621a50867e28facdb34b49dd5",
+    "presentation": "ghcr.io/jkershawrh/virtualization-ai-foundations-presentation@sha256:a9a287880850d678d2cfebaf9909e4d975181df49fcc3b712ab0e480bc14e8b5"
   },
   "gates": {
     "exact_source_checkout": "PASS",

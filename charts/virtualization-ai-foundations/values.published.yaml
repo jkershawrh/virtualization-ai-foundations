@@ -1,18 +1,18 @@
 # Published linux/amd64 release built from source revision
-# 7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da. These exact GHCR digests
+# f222c5c9d4ec84f8d0f27fe9c0aa2033770d3be8. These exact GHCR digests
 # passed the strict release gate and were verified after an exact-digest pull.
 adapter:
   image:
     repository: ghcr.io/jkershawrh/virtualization-ai-foundations-adapter
-    tag: git-7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da
-    digest: sha256:429d27ecd1eaaec98be8e8d252925fe8dd6b0f525d0c5f06f65d1a6adba6d9a9
+    tag: git-f222c5c9d4ec84f8d0f27fe9c0aa2033770d3be8
+    digest: sha256:3d90ef4b3ef0d3c7c09f5126f967070ca4c1496621a50867e28facdb34b49dd5
     pullPolicy: IfNotPresent
 
 presentation:
   image:
     repository: ghcr.io/jkershawrh/virtualization-ai-foundations-presentation
-    tag: git-7d0d88d61dcfa1a1ab97f7d187249c7fc29f13da
-    digest: sha256:fb4869e465beb513636ad574d9ee1974d82431b226099e6d8933f24263b9d61c
+    tag: git-f222c5c9d4ec84f8d0f27fe9c0aa2033770d3be8
+    digest: sha256:a9a287880850d678d2cfebaf9909e4d975181df49fcc3b712ab0e480bc14e8b5
     pullPolicy: IfNotPresent
 
 vm:
