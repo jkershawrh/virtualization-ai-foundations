@@ -1,4 +1,37 @@
 {{- if .Values.vm.enabled }}
+apiVersion: v1
+kind: Secret
+metadata:
+  name: {{ .Values.vm.name }}-cloudinit
+  labels:
+    {{- include "virtualization-ai.labels" . | nindent 4 }}
+type: Opaque
+stringData:
+  userdata: |
+    #cloud-config
+    hostname: {{ .Values.vm.name }}
+    users:
+      - name: lab
+        lock_passwd: true
+        shell: /bin/bash
+        sudo: ALL=(ALL) NOPASSWD:ALL
+        {{- if .Values.vm.sshAuthorizedKey }}
+        ssh_authorized_keys:
+          - {{ .Values.vm.sshAuthorizedKey | quote }}
+        {{- end }}
+    write_files:
+      - path: /opt/virtualization-ai/operations-note.txt
+        permissions: "0644"
+        content: |
+          Operator note: intermittent vibration appears after restart and clears when load is reduced; inspect before the next production window.
+      - path: /usr/local/bin/virtualization-ai-client
+        permissions: "0755"
+        content: |
+          {{- .Files.Get "files/vm_client.py" | nindent 10 }}
+    runcmd:
+      - ["restorecon", "-v", "/usr/local/bin/virtualization-ai-client"]
+      - ["mkdir", "-p", "/var/lib/virtualization-ai"]
+---
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
@@ -43,28 +76,6 @@ spec:
             image: {{ include "virtualization-ai.image" (list .Values.vm.containerDisk) | quote }}
         - name: cloudinit
           cloudInitNoCloud:
-            userData: |
-              #cloud-config
-              hostname: {{ .Values.vm.name }}
-              users:
-                - name: lab
-                  lock_passwd: true
-                  shell: /bin/bash
-                  sudo: ALL=(ALL) NOPASSWD:ALL
-                  {{- if .Values.vm.sshAuthorizedKey }}
-                  ssh_authorized_keys:
-                    - {{ .Values.vm.sshAuthorizedKey | quote }}
-                  {{- end }}
-              write_files:
-                - path: /opt/virtualization-ai/operations-note.txt
-                  permissions: "0644"
-                  content: |
-                    Operator note: intermittent vibration appears after restart and clears when load is reduced; inspect before the next production window.
-                - path: /usr/local/bin/virtualization-ai-client
-                  permissions: "0755"
-                  content: |
-                    {{- .Files.Get "files/vm_client.py" | nindent 20 }}
-              runcmd:
-                - ["restorecon", "-v", "/usr/local/bin/virtualization-ai-client"]
-                - ["mkdir", "-p", "/var/lib/virtualization-ai"]
+            userDataSecretRef:
+              name: {{ .Values.vm.name }}-cloudinit
 {{- end }}
