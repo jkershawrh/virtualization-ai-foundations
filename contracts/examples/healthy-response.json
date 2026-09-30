@@ -3,20 +3,12 @@
   "request_id": "11111111-1111-4111-8111-111111111111",
   "source_state": "REHEARSAL",
   "condition": "healthy",
-  "ai_participated": true,
-  "model": {
-    "id": "configured-cpu-model",
-    "provider": "rehearsal-fixture",
-    "hardware": "Intel Xeon CPU"
-  },
-  "result": {
-    "category": "inspect",
-    "summary": "Inspect the workload before the next production window.",
-    "rationale": "The note describes a repeatable symptom tied to restart and load, but does not establish an emergency condition."
-  },
+  "ai_participated": false,
+  "model": null,
+  "result": null,
   "validation": {
     "schema_valid": true,
-    "category_valid": true
+    "category_valid": false
   },
   "authority": {
     "model": "advisory-only",
@@ -30,7 +22,7 @@
       "observed_at": "2026-09-28T12:00:00Z"
     },
     {
-      "id": "model-invocation-receipt",
+      "id": "rehearsal-control-receipt",
       "producer": "ai-analysis-adapter",
       "observed_at": "2026-09-28T12:00:01Z"
     }

@@ -85,7 +85,7 @@ export function LiveJourney({ scene }: { scene: LiveJourneyScene }) {
       {complete && scene.workspace && <a className="button button-primary" href={scene.workspace.href}>{scene.workspace.label} →</a>}
       </div>
     </div>
-    <aside className="live-workspace-context"><span>HOW IT WORKS</span><strong>Evidence accumulates</strong><p>Each action runs the configured adapter. Results stay attached to their source state, and later conditions do not erase earlier proof.</p><small>Agent, workload, and LLM participation belong beside the output that proves them.</small></aside>
+    <aside className="live-workspace-context"><span>HOW IT WORKS</span><strong>Evidence accumulates</strong><p>Each action runs the configured adapter. Results stay attached to their source state, and later conditions do not erase earlier proof.</p><small>Any LLM participation must appear beside LIVE output that proves it.</small></aside>
   </div>
   {showTopology && scene.technicalTopology && <div className="live-topology-drawer"><TechnicalTopology topology={scene.technicalTopology} activeIds={step?.activeNodeIds ?? []} /></div>}
   </SceneFrame>

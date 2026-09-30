@@ -1,10 +1,10 @@
 {
   "request_id": "11111111-1111-4111-8111-111111111111",
   "source_state": "REHEARSAL",
-  "ai_participated": "yes",
-  "model_id": "configured-cpu-model",
-  "hardware": "Intel Xeon CPU",
-  "category": "inspect",
-  "outcome": "Schema-valid advisory output",
+  "ai_participated": "no",
+  "model_id": "none",
+  "hardware": "not invoked",
+  "category": "none",
+  "outcome": "Rehearsal control path; model not invoked",
   "authority": "human operator"
 }

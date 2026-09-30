@@ -21,8 +21,14 @@ jq -n \
         source_state: $healthy[0].source_state
       },
       {
-        claim: "A named Intel Xeon CPU model produced a schema-valid advisory result",
-        evidence_ids: ["model-invocation-receipt", "output-validation-receipt"],
+        claim: (if $healthy[0].source_state == "LIVE" and $healthy[0].ai_participated == true
+          then "A named Intel Xeon CPU model produced a schema-valid advisory result"
+          else "The rehearsal control path completed without model participation or output"
+          end),
+        evidence_ids: (if $healthy[0].source_state == "LIVE" and $healthy[0].ai_participated == true
+          then ["model-invocation-receipt", "output-validation-receipt"]
+          else ["rehearsal-control-receipt", "contract-validation-receipt"]
+          end),
         model: $healthy[0].model,
         ai_participated: $healthy[0].ai_participated
       },
@@ -47,7 +53,8 @@ jq -n \
 Your artifact should prove four separate facts:
 
 1. the VM-origin request and Service path;
-2. model participation and identity;
+2. model participation and identity only when the healthy response is `LIVE`,
+   otherwise an explicit no-participation rehearsal-control record;
 3. deterministic output validation;
 4. human-owned authority and fail-closed behavior.
 

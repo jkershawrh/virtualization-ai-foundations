@@ -17,7 +17,8 @@ test('healthy and unavailable evidence remain visible together', async ({ page }
   await page.getByRole('button', { name: /run the vm-origin journey/i }).click()
   await page.getByRole('button', { name: /next live act/i }).click()
   await expect(page.getByText('Failed closed at model boundary')).toBeVisible()
-  await expect(page.getByText('configured-cpu-model')).toBeVisible()
+  await expect(page.getByText('Rehearsal control path; model not invoked')).toBeVisible()
+  await expect(page.getByText('configured-cpu-model')).toHaveCount(0)
   await expect(page).toHaveScreenshot('proof-complete.png', { fullPage: true })
 })
 

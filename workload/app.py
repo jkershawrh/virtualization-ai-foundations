@@ -144,11 +144,10 @@ def rehearsal_result(payload: Dict[str, Any]) -> Dict[str, Any]:
     result = json.loads((FIXTURES / "healthy-response.json").read_text())
     result["request_id"] = payload["request_id"]
     result["source_state"] = source_state()
-    result["model"]["hardware"] = "Intel Xeon CPU"
     result["evidence"] = [
         {"id": "vm-request-receipt", "producer": payload["origin"]["guest_hostname"], "observed_at": now()},
-        {"id": "model-invocation-receipt", "producer": "ai-analysis-adapter", "observed_at": now()},
-        {"id": "output-validation-receipt", "producer": "ai-analysis-adapter", "observed_at": now()},
+        {"id": "rehearsal-control-receipt", "producer": "ai-analysis-adapter", "observed_at": now()},
+        {"id": "contract-validation-receipt", "producer": "ai-analysis-adapter", "observed_at": now()},
     ]
     return result
 

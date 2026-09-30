@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { demoConfig } from '../demo.config'
 import '../live/demoAdapter'
+import healthyFixture from '../live/fixtures/healthy.json'
 import type { SceneConfig } from '../types'
 import { SceneRenderer } from './SceneRenderer'
 
@@ -22,6 +23,15 @@ describe('SceneRenderer', () => {
     expect(await screen.findByText('rehearsal')).toBeInTheDocument()
   })
 
+  it('does not claim AI participation or model output in the healthy rehearsal fixture', () => {
+    expect(healthyFixture).toMatchObject({
+      source_state: 'REHEARSAL',
+      ai_participated: 'no',
+      model_id: 'none',
+      outcome: 'Rehearsal control path; model not invoked',
+    })
+  })
+
   it('runs a guided proof through the visible architecture', async () => {
     const scene = scenes.find((item) => item.type === 'live-journey')!
     render(<SceneRenderer scene={scene} brand={demoConfig.brand} />)
@@ -32,7 +42,7 @@ describe('SceneRenderer', () => {
     expect(screen.getByText('OpenShift namespace')).toBeInTheDocument()
     expect(screen.getByText('POST /api/v1/analyze')).toBeInTheDocument()
     fireEvent.click(screen.getByRole('button', { name: /run the vm-origin journey/i }))
-    expect((await screen.findAllByText('Healthy model condition'))[0]).toBeInTheDocument()
+    expect((await screen.findAllByText('Healthy request condition'))[0]).toBeInTheDocument()
     expect(await screen.findByRole('button', { name: /next live act/i })).toBeInTheDocument()
   })
 
@@ -43,7 +53,7 @@ describe('SceneRenderer', () => {
     await screen.findByRole('button', { name: /next live act/i })
     fireEvent.click(screen.getByRole('button', { name: /next live act/i }))
     await screen.findByRole('button', { name: /replay/i })
-    expect(screen.getAllByText('Healthy model condition').length).toBeGreaterThan(0)
+    expect(screen.getAllByText('Healthy request condition').length).toBeGreaterThan(0)
     expect(screen.getAllByText('Unavailable model condition').length).toBeGreaterThan(0)
     expect(screen.getByText('Failed closed at model boundary')).toBeInTheDocument()
   })

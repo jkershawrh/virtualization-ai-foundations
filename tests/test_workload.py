@@ -47,7 +47,13 @@ class WorkloadTests(unittest.TestCase):
         payload = json.loads((ROOT / "contracts/examples/healthy-request.json").read_text())
         _, data = self.request("/api/v1/analyze", payload)
         self.assertEqual(data["source_state"], "REHEARSAL")
-        self.assertTrue(data["ai_participated"])
+        self.assertFalse(data["ai_participated"])
+        self.assertIsNone(data["model"])
+        self.assertIsNone(data["result"])
+        self.assertFalse(data["validation"]["category_valid"])
+        evidence_ids = {receipt["id"] for receipt in data["evidence"]}
+        self.assertNotIn("model-invocation-receipt", evidence_ids)
+        self.assertIn("rehearsal-control-receipt", evidence_ids)
         self.assertEqual(data["authority"]["actions_permitted"], [])
 
     def test_unavailable_condition_fails_closed(self):

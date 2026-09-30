@@ -22,6 +22,25 @@ Record the VirtualMachine name, VirtualMachineInstance phase, node, and guest IP
 The VM and VMI are related but different runtime objects; the running VMI is the
 current guest execution.
 
+== Prepare this seat's VM credential
+
+Launchpad generates a different SSH keypair for every seat. The public half is
+installed in this VM by cloud-init. Extract only this seat's private half into
+the terminal; do not print it or copy it outside the lab.
+
+[source,bash,role="execute",subs=attributes+]
+----
+install -d -m 700 "$(dirname {ssh_key_path})"
+oc get secret virtualization-ai-model-runtime -n {namespace} \
+  -o jsonpath='{.data.VM_SSH_PRIVATE_KEY}' | base64 -d > {ssh_key_path}
+chmod 600 {ssh_key_path}
+test -s {ssh_key_path} && echo "seat VM credential ready"
+----
+
+This credential is namespace-scoped, expires with the seat, and is removed by
+reclamation. It exists so the request in the next stages really originates in
+the VM rather than in the browser, presentation, or certification runner.
+
 == Check the adapter source state
 
 [source,bash,role="execute",subs=attributes+]

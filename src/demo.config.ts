@@ -99,7 +99,7 @@ export const demoConfig: DemoConfig = {
         {
           id: 'live-journey', type: 'live-journey', beat: 'live-proof', eyebrow: 'Current-session evidence',
           title: 'Run the same path under two consequential conditions',
-          body: 'Healthy inference and controlled unavailability retain separate source state and evidence.',
+          body: 'A healthy request and controlled unavailability retain separate source state and evidence; only LIVE can prove inference.',
           cta: 'Run the VM-origin journey',
           nodes: [
             { id: 'vm', label: 'Operations VM', detail: 'request origin', tone: 'primary' },
@@ -111,8 +111,8 @@ export const demoConfig: DemoConfig = {
           technicalTopology,
           steps: [
             {
-              id: 'healthy', title: 'Healthy model condition',
-              detail: 'The adapter accepts a VM-shaped request only when the live endpoint returns model identity and schema-valid advisory output.',
+              id: 'healthy', title: 'Healthy request condition',
+              detail: 'LIVE requires model identity and schema-valid advisory output. REHEARSAL exercises only the contract and control path, with no model participation or output claim.',
               adapterId: 'vm-ai-healthy', activeNode: 4,
               activeNodeIds: ['vm', 'service', 'adapter', 'model', 'evidence', 'validation', 'human'],
               resultFields: [
@@ -121,6 +121,7 @@ export const demoConfig: DemoConfig = {
                 { key: 'model_id', label: 'Model' },
                 { key: 'hardware', label: 'Hardware' },
                 { key: 'category', label: 'Advisory category' },
+                { key: 'outcome', label: 'Boundary result' },
                 { key: 'authority', label: 'Final authority' },
               ],
             },
@@ -145,7 +146,7 @@ export const demoConfig: DemoConfig = {
           id: 'decision-boundary', type: 'comparison', beat: 'trials',
           title: 'The boundary is the product of the proof',
           columns: [
-            { label: 'Healthy condition', value: 'Advisory evidence', detail: 'Model identity plus deterministic validation can support a bounded human review.', tone: 'success' },
+            { label: 'Healthy condition', value: 'State-bounded evidence', detail: 'LIVE may carry model identity and validated advisory output; REHEARSAL proves controls only and carries no model claim.', tone: 'success' },
             { label: 'Unavailable condition', value: 'No invented answer', detail: 'The adapter exposes absence of model participation and returns no advisory result.', tone: 'partner' },
           ],
           speakerPrompt: 'The unavailable path is not a weaker demo. It proves that source state and authority survive when AI does not.',
@@ -179,7 +180,7 @@ export const demoConfig: DemoConfig = {
             { key: 'outcome', label: 'Latest boundary result' },
             { key: 'authority', label: 'Final authority' },
           ],
-          line1: 'The VM, Service, model, validation, and human authority stayed attributable.',
+          line1: 'The VM, Service, source state, validation, and human authority stayed attributable; model evidence appears only when LIVE.',
           line2: 'Trace it in 101. Build it in a separate 201.',
           cta: 'Close the presentation, then begin the 60–75 minute Showroom lab →',
           speakerPrompt: 'Recap only current-session evidence. If the source state is REHEARSAL or OFFLINE, say that the journey mechanics ran but live inference was not proven.',

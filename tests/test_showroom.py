@@ -45,6 +45,15 @@ class ShowroomTests(unittest.TestCase):
         self.assertNotIn("MODEL_API_KEY=", text)
         self.assertNotIn("changeme", text.lower())
 
+    def test_lab_prepares_a_per_seat_key_before_any_vm_origin_request(self):
+        verify = (SHOWROOM / "content/modules/ROOT/pages/01-verify.adoc").read_text()
+        invoke = (SHOWROOM / "content/modules/ROOT/pages/03-invoke.adoc").read_text()
+
+        self.assertIn("VM_SSH_PRIVATE_KEY", verify)
+        self.assertIn("chmod 600 {ssh_key_path}", verify)
+        self.assertIn("different SSH keypair for every seat", verify)
+        self.assertIn("virtctl ssh --identity-file={ssh_key_path}", invoke)
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -36,7 +36,9 @@ function flatten(response: AnalysisResponse): AdapterResult {
     category: response.result?.category ?? 'none',
     outcome: response.ai_participated
       ? response.validation.schema_valid && response.validation.category_valid ? 'Schema-valid advisory output' : 'Output rejected'
-      : 'Failed closed at model boundary',
+      : response.condition === 'healthy' && response.source_state === 'REHEARSAL'
+        ? 'Rehearsal control path; model not invoked'
+        : 'Failed closed at model boundary',
     authority: response.authority.final_decision_owner,
   }
 }

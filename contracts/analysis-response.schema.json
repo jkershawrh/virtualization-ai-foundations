@@ -93,7 +93,26 @@
       },
       "else": {
         "properties": {
-          "condition": { "const": "model-unavailable" },
+          "model": { "type": "null" },
+          "result": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "source_state": { "const": "REHEARSAL" } }, "required": ["source_state"] },
+      "then": {
+        "properties": {
+          "ai_participated": { "const": false },
+          "model": { "type": "null" },
+          "result": { "type": "null" }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "condition": { "const": "model-unavailable" } }, "required": ["condition"] },
+      "then": {
+        "properties": {
+          "ai_participated": { "const": false },
           "model": { "type": "null" },
           "result": { "type": "null" }
         }

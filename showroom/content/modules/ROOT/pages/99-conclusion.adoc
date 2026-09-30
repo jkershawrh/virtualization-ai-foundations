@@ -2,8 +2,10 @@
 :navtitle: Conclusion
 
 You traced an established VM-hosted workload through OpenShift Service and
-network boundaries to governed Intel Xeon CPU inference. You verified model
-participation, deterministic validation, safe failure, and human authority.
+network boundaries toward governed Intel Xeon CPU inference. A `LIVE` response
+verifies model participation; a `REHEARSAL` response verifies only the contract
+and control path. In both states you verified deterministic validation, safe
+failure, and human authority.
 
 The takeaway is deliberately narrow:
 
