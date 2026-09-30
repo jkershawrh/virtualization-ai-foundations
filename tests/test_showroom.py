@@ -18,6 +18,11 @@ class ShowroomTests(unittest.TestCase):
         antora = yaml.safe_load((SHOWROOM / "content/antora.yml").read_text())
         self.assertEqual(antora["name"], "virtualization-ai-101")
         self.assertEqual(antora["version"], "main")
+        playbook = yaml.safe_load((SHOWROOM / "default-site.yml").read_text())
+        self.assertEqual(
+            playbook["ui"]["bundle"]["url"],
+            "https://github.com/rhpds/rhdp_showroom_theme/releases/download/v2.0.3/ui-bundle.zip",
+        )
         nav = (SHOWROOM / "content/modules/ROOT/nav.adoc").read_text()
         for page in ["01-verify", "02-trace", "03-invoke", "04-inspect", "05-failure", "06-evidence"]:
             self.assertIn(page, nav)
