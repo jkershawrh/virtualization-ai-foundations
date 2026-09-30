@@ -186,7 +186,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          identity="${{ github.server_url }}/${{ github.repository }}/.github/workflows/release-images.yml@refs/heads/main"
+          identity="${{ github.server_url }}/${{ github.repository }}/.github/workflows/release-images.yml@${{ github.ref }}"
           issuer="https://token.actions.githubusercontent.com"
           cosign verify --certificate-identity="$identity" --certificate-oidc-issuer="$issuer" \
             "$DIGEST_REF" > signature-verification-${{ matrix.component }}.json
