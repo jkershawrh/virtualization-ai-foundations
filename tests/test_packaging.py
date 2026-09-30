@@ -31,6 +31,22 @@ class PackagingTests(unittest.TestCase):
         self.assertIn("kind: VirtualMachine", render.stdout)
         self.assertIn("kind: NetworkPolicy", render.stdout)
 
+    def test_launchpad_flat_image_values_override_nested_defaults(self):
+        workload = "ghcr.io/example/virt101-adapter@sha256:" + "a" * 64
+        presentation = "ghcr.io/example/virt101-presentation@sha256:" + "b" * 64
+        render = subprocess.run(
+            [
+                "helm", "template", "virtualization-ai", str(CHART),
+                "--set-string", f"workload_image={workload}",
+                "--set-string", f"presentation_image={presentation}",
+            ],
+            capture_output=True,
+            text=True,
+        )
+        self.assertEqual(render.returncode, 0, render.stderr)
+        self.assertIn(f'image: "{workload}"', render.stdout)
+        self.assertIn(f'image: "{presentation}"', render.stdout)
+
     def test_defaults_are_fail_closed_and_secret_free(self):
         values = yaml.safe_load((CHART / "values.yaml").read_text())
         self.assertEqual(values["adapter"]["mode"], "rehearsal")

@@ -24,7 +24,7 @@ spec:
           type: RuntimeDefault
       containers:
         - name: adapter
-          image: {{ include "virtualization-ai.image" (list .Values.adapter.image) | quote }}
+          image: {{ default (include "virtualization-ai.image" (list .Values.adapter.image)) .Values.workload_image | quote }}
           imagePullPolicy: {{ .Values.adapter.image.pullPolicy }}
           securityContext:
             allowPrivilegeEscalation: false
