@@ -35,6 +35,7 @@ At the end you can:
 | Inspect | Which model ran and what deterministic checks accepted its output? | 15 min
 | Failure | Does the same path fail closed without inventing an AI result? | 10 min
 | Evidence | Can you state exactly what was and was not proven? | 15 min
+| Cleanup | Did you remove the learner credential and temporary receipts without deleting the lab? | 5 min
 |===
 
 No cost, performance, or capacity result is pre-authored in this lab. A

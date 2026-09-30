@@ -62,4 +62,4 @@ It should not claim performance, savings, autonomous action, migration success,
 capacity, resilience, or certification.
 
 [.next-nav]
-xref:99-conclusion.adoc[Finish the 101 journey →]
+xref:07-cleanup.adoc[Next: clean learner artifacts →]

@@ -1,0 +1,54 @@
+= Clean learner artifacts
+:navtitle: 7. Cleanup
+
+== Preserve the bounded learner outcome
+
+The evidence map in `$HOME/virtualization-ai-evidence-map.json` is your sanitized
+learner artifact. It contains no model credential, VM private key, or raw
+operations note. Review it before removing the temporary request receipts.
+
+[source,bash,role="execute"]
+----
+jq -e '
+  .schema_version == "learner-evidence-map/v1" and
+  (.claims | length) == 3 and
+  (.limitations | length) == 3
+' "$HOME/virtualization-ai-evidence-map.json"
+----
+
+== Remove only participant-owned material
+
+The per-seat SSH key and files under `/tmp` are participant-owned. The
+VirtualMachine, adapter, Service, NetworkPolicies, presentation, Showroom, and
+namespace are Launchpad-owned. A participant must not delete those resources
+to manufacture a zero-residue claim.
+
+[source,bash,role="execute",subs=attributes+]
+----
+rm -f "{ssh_key_path}"
+rm -f /tmp/virtualization-ai-request-id \
+      /tmp/virtualization-ai-failure-request-id \
+      /tmp/virtualization-ai-healthy.json \
+      /tmp/virtualization-ai-unavailable.json \
+      /tmp/virtualization-ai-evidence.json
+----
+
+== Prove the ownership boundary
+
+[source,bash,role="execute",subs=attributes+]
+----
+test ! -e "{ssh_key_path}"
+test ! -e /tmp/virtualization-ai-healthy.json
+test ! -e /tmp/virtualization-ai-unavailable.json
+oc auth can-i delete namespaces | grep -qx no
+oc get vm,vmi -n {namespace} -l app.kubernetes.io/part-of=virtualization-ai-101 -o name
+oc get deployment ai-analysis-adapter virtualization-ai-presentation -n {namespace} -o name
+----
+
+These checks prove learner cleanup and that the platform-owned lab remains
+healthy for the seat. They do not prove full reclamation. At order expiry or
+manual reclaim, Launchpad must independently prove removal of the namespace,
+Routes, RoleBindings, entitlements, model access, and other generated state.
+
+[.next-nav]
+xref:99-conclusion.adoc[Finish the 101 journey →]

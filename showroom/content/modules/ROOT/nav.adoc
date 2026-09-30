@@ -5,4 +5,5 @@
 * xref:04-inspect.adoc[4. Inspect AI evidence]
 * xref:05-failure.adoc[5. Exercise safe failure]
 * xref:06-evidence.adoc[6. Export the evidence map]
+* xref:07-cleanup.adoc[7. Clean learner artifacts]
 * xref:99-conclusion.adoc[Conclusion]

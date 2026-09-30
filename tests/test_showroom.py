@@ -24,7 +24,7 @@ class ShowroomTests(unittest.TestCase):
             "https://github.com/rhpds/rhdp_showroom_theme/releases/download/v2.0.3/ui-bundle.zip",
         )
         nav = (SHOWROOM / "content/modules/ROOT/nav.adoc").read_text()
-        for page in ["01-verify", "02-trace", "03-invoke", "04-inspect", "05-failure", "06-evidence"]:
+        for page in ["01-verify", "02-trace", "03-invoke", "04-inspect", "05-failure", "06-evidence", "07-cleanup"]:
             self.assertIn(page, nav)
 
     def test_lab_states_101_and_201_boundary(self):
@@ -53,6 +53,14 @@ class ShowroomTests(unittest.TestCase):
         self.assertIn("chmod 600 {ssh_key_path}", verify)
         self.assertIn("different SSH keypair for every seat", verify)
         self.assertIn("virtctl ssh --identity-file={ssh_key_path}", invoke)
+
+    def test_cleanup_removes_learner_secrets_and_preserves_platform_resources(self):
+        cleanup = (SHOWROOM / "content/modules/ROOT/pages/07-cleanup.adoc").read_text()
+        self.assertIn('rm -f "{ssh_key_path}"', cleanup)
+        self.assertIn("oc auth can-i delete namespaces", cleanup)
+        self.assertIn("must not delete", cleanup)
+        self.assertIn("oc get vm,vmi", cleanup)
+        self.assertIn('role="execute"', cleanup)
 
 
 if __name__ == "__main__":
