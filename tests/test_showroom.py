@@ -17,6 +17,7 @@ class ShowroomTests(unittest.TestCase):
     def test_showroom_is_separate_and_complete(self):
         antora = yaml.safe_load((SHOWROOM / "content/antora.yml").read_text())
         self.assertEqual(antora["name"], "virtualization-ai-101")
+        self.assertEqual(antora["version"], "main")
         nav = (SHOWROOM / "content/modules/ROOT/nav.adoc").read_text()
         for page in ["01-verify", "02-trace", "03-invoke", "04-inspect", "05-failure", "06-evidence"]:
             self.assertIn(page, nav)
