@@ -13,13 +13,11 @@ spec:
   policyTypes: [Ingress, Egress]
   ingress:
     - from:
-        - podSelector:
-            matchLabels:
-              app.kubernetes.io/instance: {{ .Release.Name }}
-              app.kubernetes.io/component: presentation
-        - podSelector:
-            matchLabels:
-              kubevirt.io/domain: {{ .Values.vm.name }}
+        # Every seat has an isolated namespace. Allow the presentation,
+        # terminal, and masqueraded KubeVirt guest path inside that boundary;
+        # OVN cannot reliably attribute guest-origin traffic to a narrower pod
+        # selector after KubeVirt masquerade translation.
+        - podSelector: {}
       ports:
         - protocol: TCP
           port: 8080
@@ -82,7 +80,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      kubevirt.io/domain: {{ .Values.vm.name }}
+      vm.kubevirt.io/name: {{ .Values.vm.name }}
   policyTypes: [Egress]
   egress:
     - to:

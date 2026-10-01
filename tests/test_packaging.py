@@ -69,6 +69,8 @@ class PackagingTests(unittest.TestCase):
             render.stdout,
         )
         self.assertIn("podSelector: {}", render.stdout)
+        self.assertIn("vm.kubevirt.io/name: operations-vm", render.stdout)
+        self.assertNotIn("kubevirt.io/domain: operations-vm", render.stdout)
         self.assertIn("port: 5353", render.stdout)
         self.assertIn("port: 4000", render.stdout)
 
