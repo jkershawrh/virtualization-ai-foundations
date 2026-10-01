@@ -1,6 +1,11 @@
 = Invoke from inside the VM
 :navtitle: 3. Invoke
 
+== Do
+
+Create one correlation identifier and use the per-seat credential to execute
+the request inside the VM guest.
+
 == Create a correlation identifier
 
 [source,bash,role="execute"]

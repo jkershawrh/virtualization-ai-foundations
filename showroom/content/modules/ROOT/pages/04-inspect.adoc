@@ -1,6 +1,11 @@
 = Inspect AI evidence
 :navtitle: 4. Inspect
 
+== Prove
+
+Join the VM-origin request to the adapter's redacted evidence record before
+making any inference claim.
+
 == Retrieve the redacted evidence record
 
 [source,bash,role="execute",subs=attributes+]

@@ -9,6 +9,15 @@ SHOWROOM = ROOT / "showroom"
 
 
 class ShowroomTests(unittest.TestCase):
+    def test_deployed_showroom_discovers_the_playbook_from_repository_root(self):
+        playbook = ROOT / "default-site.yml"
+        self.assertTrue(playbook.is_file())
+        config = yaml.safe_load(playbook.read_text())
+        source = config["content"]["sources"][0]
+        self.assertEqual(source["url"], ".")
+        self.assertEqual(source["start_path"], "showroom/content")
+        self.assertTrue((ROOT / source["start_path"] / "antora.yml").is_file())
+
     def test_showroom_has_independent_playbook(self):
         playbook = ROOT / "showroom/default-site.yml"
         self.assertTrue(playbook.exists())
@@ -39,6 +48,18 @@ class ShowroomTests(unittest.TestCase):
         self.assertIn("source_state", text)
         self.assertIn("ai_participated", text)
         self.assertIn("human operator", text)
+
+    def test_lab_signposts_show_learn_do_prove_and_uses_the_console(self):
+        pages = SHOWROOM / "content/modules/ROOT/pages"
+        text = "\n".join(path.read_text() for path in pages.glob("*.adoc"))
+        for heading in ("== Show", "== Learn", "== Do", "== Prove"):
+            self.assertIn(heading, text)
+
+        verify = (pages / "01-verify.adoc").read_text()
+        self.assertIn("OpenShift Console", verify)
+        self.assertIn("VirtualMachines", verify)
+        self.assertIn("VirtualMachineInstances", verify)
+        self.assertIn("Workloads", verify)
 
     def test_lab_never_embeds_secret_values(self):
         text = "\n".join(path.read_text() for path in SHOWROOM.rglob("*") if path.is_file())

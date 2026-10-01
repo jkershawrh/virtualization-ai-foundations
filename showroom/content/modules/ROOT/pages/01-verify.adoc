@@ -1,6 +1,18 @@
 = Verify the runtime
 :navtitle: 1. Verify
 
+== Show
+
+Use the *OpenShift Console* tab before the terminal commands:
+
+. Open *Virtualization → VirtualMachines* and select `{vm_name}`.
+. Open its *VirtualMachineInstances* details and note the phase, node, and guest IP.
+. Open *Workloads → Deployments* and inspect `ai-analysis-adapter` and
+  `virtualization-ai-presentation` in `{namespace}`.
+
+The Console is the operator view of the same namespace-scoped objects proved
+below. Stop if the tab is missing, shows another namespace, or cannot authenticate.
+
 == Check OpenShift Virtualization
 
 [source,bash,role="execute",subs=attributes+]

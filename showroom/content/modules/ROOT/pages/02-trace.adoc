@@ -1,6 +1,11 @@
 = Trace the boundaries
 :navtitle: 2. Trace
 
+== Learn
+
+Trace each boundary separately: VM identity, Service routing, NetworkPolicy,
+model participation, output validation, and final human authority.
+
 == Service boundary
 
 [source,bash,role="execute",subs=attributes+]
