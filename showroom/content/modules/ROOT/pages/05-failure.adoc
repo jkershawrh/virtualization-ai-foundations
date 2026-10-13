@@ -12,8 +12,10 @@ printf '%s' "$FAILURE_REQUEST_ID" | tee /tmp/virtualization-ai-failure-request-i
 [source,bash,role="execute",subs=attributes+]
 ----
 FAILURE_REQUEST_ID=$(cat /tmp/virtualization-ai-failure-request-id)
-virtctl ssh --identity-file={ssh_key_path} -n {namespace} lab@{vm_name} -- \
-  sudo /usr/local/bin/virtualization-ai-client model-unavailable "$FAILURE_REQUEST_ID" | \
+virtctl ssh --identity-file={ssh_key_path} -n {namespace} \
+  --local-ssh-opts='-o StrictHostKeyChecking=accept-new' \
+  --command="sudo env LAB_NAMESPACE={namespace} VM_NAME={vm_name} /usr/local/bin/virtualization-ai-client model-unavailable $FAILURE_REQUEST_ID" \
+  lab@vm/{vm_name} | \
   tee /tmp/virtualization-ai-unavailable.json
 ----
 

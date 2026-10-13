@@ -9,6 +9,19 @@ SHOWROOM = ROOT / "showroom"
 
 
 class ShowroomTests(unittest.TestCase):
+    def test_vm_commands_use_a_writable_seat_key_and_supported_ssh_syntax(self):
+        attrs = yaml.safe_load((SHOWROOM / "content/antora.yml").read_text())["asciidoc"]["attributes"]
+        self.assertTrue(attrs["ssh_key_path"].startswith("/tmp/"))
+        pages = SHOWROOM / "content/modules/ROOT/pages"
+        invoke = (pages / "03-invoke.adoc").read_text()
+        failure = (pages / "05-failure.adoc").read_text()
+        for text in (invoke, failure):
+            self.assertIn("lab@vm/{vm_name}", text)
+            self.assertIn("--command=", text)
+            self.assertIn("StrictHostKeyChecking=accept-new", text)
+            self.assertIn("sudo env LAB_NAMESPACE={namespace} VM_NAME={vm_name}", text)
+            self.assertNotIn("lab@{vm_name} --", text)
+
     def test_runtime_verification_stays_inside_the_seat_namespace(self):
         verify = (SHOWROOM / "content/modules/ROOT/pages/01-verify.adoc").read_text()
         self.assertNotIn("oc get hyperconverged", verify)

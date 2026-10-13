@@ -21,8 +21,9 @@ evidence record.
 
 [source,bash,role="execute",subs=attributes+]
 ----
-virtctl ssh --identity-file={ssh_key_path} -n {namespace} lab@{vm_name} -- \
-  cat /opt/virtualization-ai/operations-note.txt
+virtctl ssh --identity-file={ssh_key_path} -n {namespace} \
+  --local-ssh-opts='-o StrictHostKeyChecking=accept-new' \
+  --command='cat /opt/virtualization-ai/operations-note.txt' lab@vm/{vm_name}
 ----
 
 The input is synthetic and bounded. No customer, production, or credential data
@@ -33,8 +34,10 @@ belongs in this exercise.
 [source,bash,role="execute",subs=attributes+]
 ----
 REQUEST_ID=$(cat /tmp/virtualization-ai-request-id)
-virtctl ssh --identity-file={ssh_key_path} -n {namespace} lab@{vm_name} -- \
-  sudo /usr/local/bin/virtualization-ai-client healthy "$REQUEST_ID" | \
+virtctl ssh --identity-file={ssh_key_path} -n {namespace} \
+  --local-ssh-opts='-o StrictHostKeyChecking=accept-new' \
+  --command="sudo env LAB_NAMESPACE={namespace} VM_NAME={vm_name} /usr/local/bin/virtualization-ai-client healthy $REQUEST_ID" \
+  lab@vm/{vm_name} | \
   tee /tmp/virtualization-ai-healthy.json
 ----
 
