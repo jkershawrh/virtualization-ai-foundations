@@ -1,3 +1,4 @@
+import subprocess
 import unittest
 from pathlib import Path
 
@@ -9,6 +10,17 @@ SHOWROOM = ROOT / "showroom"
 
 
 class ShowroomTests(unittest.TestCase):
+    def test_cleanup_accepts_only_an_explicit_namespace_denial(self):
+        cleanup = (SHOWROOM / 'content/modules/ROOT/pages/07-cleanup.adoc').read_text()
+        self.assertIn('NAMESPACE_DELETE_ALLOWED="$(oc auth can-i delete namespaces || true)"', cleanup)
+        self.assertIn('test "$NAMESPACE_DELETE_ALLOWED" = "no"', cleanup)
+        self.assertNotIn('oc auth can-i delete namespaces | grep', cleanup)
+        proof = '\n'.join(line for line in cleanup.splitlines() if line.startswith(('NAMESPACE_DELETE_ALLOWED=', 'test "$NAMESPACE_DELETE_ALLOWED"')))
+        for answer, status, accepted in [('no', 1, True), ('yes', 0, False), ('', 1, False), ('Forbidden', 1, False)]:
+            with self.subTest(answer=answer):
+                result = subprocess.run(['bash', '-c', f'set -euo pipefail\noc() {{ printf "%s" "{answer}"; return {status}; }}\n{proof}'], capture_output=True)
+                self.assertEqual(result.returncode == 0, accepted)
+
     def test_service_trace_uses_installed_json_tools(self):
         trace = (SHOWROOM / 'content/modules/ROOT/pages/02-trace.adoc').read_text()
         self.assertNotIn('yq ', trace)

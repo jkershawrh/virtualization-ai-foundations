@@ -40,7 +40,8 @@ rm -f /tmp/virtualization-ai-request-id \
 test ! -e "{ssh_key_path}"
 test ! -e /tmp/virtualization-ai-healthy.json
 test ! -e /tmp/virtualization-ai-unavailable.json
-oc auth can-i delete namespaces | grep -qx no
+NAMESPACE_DELETE_ALLOWED="$(oc auth can-i delete namespaces || true)"
+test "$NAMESPACE_DELETE_ALLOWED" = "no"
 oc get vm,vmi -n {namespace} -l app.kubernetes.io/part-of=virtualization-ai-101 -o name
 oc get deployment ai-analysis-adapter virtualization-ai-presentation -n {namespace} -o name
 ----
@@ -49,6 +50,11 @@ These checks prove learner cleanup and that the platform-owned lab remains
 healthy for the seat. They do not prove full reclamation. At order expiry or
 manual reclaim, Launchpad must independently prove removal of the namespace,
 Routes, RoleBindings, entitlements, model access, and other generated state.
+
+The namespace permission check must print `no`. A warning that namespaces are
+not namespace-scoped is expected. The command also returns a nonzero exit code
+for a denial, so the explicit text check above handles that expected result;
+an empty answer or `yes` still fails the proof.
 
 [.next-nav]
 xref:99-conclusion.adoc[Finish the 101 journey →]
