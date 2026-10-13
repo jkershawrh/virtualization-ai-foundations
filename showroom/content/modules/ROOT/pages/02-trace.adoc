@@ -10,8 +10,8 @@ model participation, output validation, and final human authority.
 
 [source,bash,role="execute",subs=attributes+]
 ----
-oc get service {adapter_service} -n {namespace} -o yaml | \
-  yq '{selector: .spec.selector, ports: .spec.ports}'
+oc get service {adapter_service} -n {namespace} -o json | \
+  jq '{selector: .spec.selector, ports: .spec.ports}'
 
 oc get endpointslice -n {namespace} \
   -l kubernetes.io/service-name={adapter_service} \

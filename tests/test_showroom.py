@@ -9,6 +9,12 @@ SHOWROOM = ROOT / "showroom"
 
 
 class ShowroomTests(unittest.TestCase):
+    def test_service_trace_uses_installed_json_tools(self):
+        trace = (SHOWROOM / 'content/modules/ROOT/pages/02-trace.adoc').read_text()
+        self.assertNotIn('yq ', trace)
+        self.assertIn('oc get service {adapter_service} -n {namespace} -o json', trace)
+        self.assertIn("jq '{selector: .spec.selector, ports: .spec.ports}'", trace)
+
     def test_health_probe_runs_from_the_learner_terminal(self):
         verify = (SHOWROOM / 'content/modules/ROOT/pages/01-verify.adoc').read_text()
         self.assertNotIn('wget -qO-', verify)
