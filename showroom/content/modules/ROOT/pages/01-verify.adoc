@@ -62,8 +62,7 @@ the VM rather than in the browser, presentation, or certification runner.
 
 [source,bash,role="execute",subs=attributes+]
 ----
-oc exec -n {namespace} deploy/virtualization-ai-presentation -- \
-  wget -qO- http://{adapter_service}:8080/healthz | jq .
+curl --connect-timeout 5 --max-time 30 -fsS http://{adapter_service}:8080/healthz | jq .
 ----
 
 `mode: live` is required for a live AI claim. `rehearsal` or `offline` remains

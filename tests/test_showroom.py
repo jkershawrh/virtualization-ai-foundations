@@ -9,6 +9,14 @@ SHOWROOM = ROOT / "showroom"
 
 
 class ShowroomTests(unittest.TestCase):
+    def test_health_probe_runs_from_the_learner_terminal(self):
+        verify = (SHOWROOM / 'content/modules/ROOT/pages/01-verify.adoc').read_text()
+        self.assertNotIn('wget -qO-', verify)
+        self.assertIn('curl --connect-timeout 5 --max-time 30 -fsS http://{adapter_service}:8080/healthz | jq .', verify)
+        inspect = (SHOWROOM / 'content/modules/ROOT/pages/04-inspect.adoc').read_text()
+        self.assertNotIn('wget -qO-', inspect)
+        self.assertIn('curl --connect-timeout 5 --max-time 30 -fsS "http://{adapter_service}:8080/api/v1/evidence/$REQUEST_ID"', inspect)
+
     def test_vm_commands_use_a_writable_seat_key_and_supported_ssh_syntax(self):
         attrs = yaml.safe_load((SHOWROOM / "content/antora.yml").read_text())["asciidoc"]["attributes"]
         self.assertTrue(attrs["ssh_key_path"].startswith("/tmp/"))
