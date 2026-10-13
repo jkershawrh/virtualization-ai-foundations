@@ -8,6 +8,10 @@ PAGES = ROOT / "showroom/content/modules/ROOT/pages"
 
 
 class ParticipantExperienceTests(unittest.TestCase):
+    def test_immutable_content_packages_the_skin_at_the_root_playbook_path(self):
+        containerfile = (ROOT / 'showroom-content/Containerfile').read_text()
+        assert 'showroom/supplemental-ui /bundle/supplemental-ui' in containerfile
+
     def test_every_playbook_packages_the_partnership_skin_and_execute_bridge(self):
         for path in (ROOT / "default-site.yml", ROOT / "showroom/default-site.yml"):
             if not path.exists():
