@@ -9,6 +9,14 @@ SHOWROOM = ROOT / "showroom"
 
 
 class ShowroomTests(unittest.TestCase):
+    def test_runtime_verification_stays_inside_the_seat_namespace(self):
+        verify = (SHOWROOM / "content/modules/ROOT/pages/01-verify.adoc").read_text()
+        self.assertNotIn("oc get hyperconverged", verify)
+        self.assertNotIn("-n openshift-cnv", verify)
+        self.assertIn("oc wait -n {namespace} --for=condition=Ready", verify)
+        self.assertIn("vmi/{vm_name}", verify)
+        self.assertIn("Launchpad verifies the cluster-wide", verify)
+
     def test_deployed_showroom_discovers_the_playbook_from_repository_root(self):
         playbook = ROOT / "default-site.yml"
         self.assertTrue(playbook.is_file())

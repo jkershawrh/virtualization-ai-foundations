@@ -13,15 +13,20 @@ Use the *OpenShift Console* tab before the terminal commands:
 The Console is the operator view of the same namespace-scoped objects proved
 below. Stop if the tab is missing, shows another namespace, or cannot authenticate.
 
-== Check OpenShift Virtualization
+== Check this seat's virtualization runtime
+
+Launchpad verifies the cluster-wide OpenShift Virtualization operator before
+placing the lab. Your participant identity is limited to this seat's namespace;
+it cannot inspect the platform-management namespace. Prove the runtime available
+to you by waiting for this seat's VirtualMachineInstance to become ready.
 
 [source,bash,role="execute",subs=attributes+]
 ----
-oc get hyperconverged kubevirt-hyperconverged -n openshift-cnv \
-  -o jsonpath='{.status.conditions[?(@.type=="Available")].status}{"\n"}'
+oc wait -n {namespace} --for=condition=Ready vmi/{vm_name} --timeout=120s
 ----
 
-Continue only when the result is `True`.
+Continue only when the command reports `condition met`. This proves your VM
+runtime is ready, not that you have cluster-wide operator permissions.
 
 == Identify the VM and VMI
 
