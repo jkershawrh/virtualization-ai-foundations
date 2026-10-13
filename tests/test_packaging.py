@@ -11,6 +11,16 @@ CHART = ROOT / "charts/virtualization-ai-foundations"
 
 
 class PackagingTests(unittest.TestCase):
+    def test_security_refresh_retires_the_failed_release_bases(self):
+        retired = {
+            "Containerfile": "57e924b3b177cf480ce53cdcad2982b44093494c217d2bc95f2fb5b6a0950a5a",
+            "workload/Containerfile": "b4f5a35502dfb90e79cd23a9f5b39776720c3a8ea29c22b21917791d715a3e1d",
+            "showroom-content/Containerfile": "1b2cb58c3df8b93b8bcb5739778692c35e491087599139deb2c8c03567cbb03e",
+        }
+        for filename, digest in retired.items():
+            with self.subTest(filename=filename):
+                self.assertNotIn(digest, (ROOT / filename).read_text())
+
     def test_runtime_images_are_digest_pinned_and_minimal(self):
         presentation = (ROOT / "Containerfile").read_text()
         adapter = (ROOT / "workload/Containerfile").read_text()
